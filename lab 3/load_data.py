@@ -10,7 +10,7 @@ __team__ = "T051"
 #==========================================#
 # Place your student_school_list function after this line
 
-def student_school_list(fileName, school) -> list:
+def student_school_list(fileName: str, school: str) -> list:
     """
     Returns a list containing a dict with the age, ID, study time, number of failures, health, absences, fall grade, and winter grade, for each student who attended the school given a csv file and a school.
     
