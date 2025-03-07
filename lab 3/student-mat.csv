@@ -1,4 +1,4 @@
- School,ID,Age,StudyTime,Failures,Health,Absences,FallGrade,WinterGrade
+School,ID,Age,StudyTime,Failures,Health,Absences,FallGrade,WinterGrade
 GP,1,18,2.5,0,3,6,5,6
 GP,2,17,2,0,3,4,5,5
 GP,3,15,2,3,3,10,7,8

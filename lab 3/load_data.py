@@ -15,11 +15,11 @@ def student_school_list(fileName: str, school: str) -> list:
     Returns a list containing a dict with the age, ID, study time, number of failures, health, absences, fall grade, and winter grade, for each student who attended the school given a csv file and a school.
     
     >>> student_school_list('student-mat.csv','GP')
-    [{'ID': '1', 'Age': '18', 'StudyTime': '2.5', 'Failures': '0', 'Health': '3', 'Absences': '6', 'FallGrade': '5', 'WinterGrade': '6'}, {another element}, ... ]
+    [{'ID': 1, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {another element}, ... ]
     >>> student_school_list('student-mat.csv','hello')
     []
     >>> student_school_list('student-mat.csv','MS')
-    [{'ID': '320', 'Age': '18', 'StudyTime': '2', 'Failures': '0', 'Health': '5', 'Absences': '2', 'FallGrade': '11', 'WinterGrade': '11'}, {another element}, ...]
+    [{'ID': 320, 'Age': 18, 'StudyTime': 2, 'Failures': 0, 'Health': 5, 'Absences': 2, 'FallGrade': 11, 'WinterGrade': 11}, {another element}, ...]
     
     """
     dataString=""
@@ -36,7 +36,7 @@ def student_school_list(fileName: str, school: str) -> list:
     #get all headers
     headers = dataString[0].rsplit(',')
     #get the location of the school header and delete it from the list of headers
-    schoolIndex = headers.index(' School')
+    schoolIndex = headers.index('School')
     del headers[schoolIndex]
 
     #iterate through each row (meaning each student) of the new list
@@ -51,14 +51,18 @@ def student_school_list(fileName: str, school: str) -> list:
             currentDict = {}
 
             for value in range(len(student)):
-                currentDict[headers[value]] = student[value]
-
+                #convert to proper type
+                if student[value].isdigit():
+                    currentDict[headers[value]] = int(student[value])
+                else:
+                    try:
+                        currentDict[headers[value]] = float(student[value])
+                    except:
+                        currentDict[headers[value]] = student[value]
             #add the dict to a new index in the array
             studentInformation += [currentDict]
 
     return studentInformation
-   
-
 #==========================================#
 # Place your student_health_list function after this line
 
