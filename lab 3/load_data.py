@@ -24,10 +24,11 @@ def student_school_list(fileName: str, school: str) -> list:
     """
     dataString=""
     #open the given file in reading mode and put it in a variable called csv
-    with open(fileName, "r") as csv:
-        #iterate through the file and add it to the dataString variable so that the entire file is converted into a str
-        for char in csv:
-            dataString+=char
+    file = open(fileName, "r")
+    #iterate through the file and add it to the dataString variable so that the entire file is converted into a str
+    for line in file:
+        dataString+=line
+    file.close()
     
     #create a list splitting at each new line so each row is in a seperate index
     dataString= dataString.splitlines()
@@ -63,6 +64,7 @@ def student_school_list(fileName: str, school: str) -> list:
             studentInformation += [currentDict]
 
     return studentInformation
+
 #==========================================#
 # Place your student_health_list function after this line
 
