@@ -69,7 +69,4 @@ def student_school_list(fileName: str, school: str) -> list:
 
     return studentInformation
 
-print(student_school_list('student-mat.csv','GP'))
-
-
 # Do NOT include a main script in your submission
