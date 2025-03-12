@@ -182,5 +182,9 @@ def load_data(fileName: str,request: dict) -> list:
 #==========================================#
 # Place your add_average function after this line
 
+def add_average(info: list) -> list:
+    for student in info:
+        student['AvgGrade'] = round((student['FallGrade'] + student['WinterGrade']) /2 , 2)
+    return info
 
 # Do NOT include a main script in your submission
