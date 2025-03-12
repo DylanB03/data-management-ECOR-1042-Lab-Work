@@ -127,7 +127,11 @@ def load_data(fileName: str,request: dict) -> list:
 
     >>> load_data('student-mat.csv', {'Failures': 0})
     [ {'School': 'GP', 'ID': 22, 'Age': 18, 'StudyTime':7.0, 'Health': 3, Absences': 7, 'FallGrade': 12, 'WinterGrade': 13},  {another element}, … ]
-
+    >>> load_data('student-mat.csv',{'ID':1})
+    [{'School': 'GP', 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}]
+    >>> load_data('student-mat.csv',{'HELLO':1000000000000})
+    Invalid Value
+    []
     """
 
     dataString = ""
@@ -163,6 +167,11 @@ def load_data(fileName: str,request: dict) -> list:
         value = request[key]
     if key != 'All':
         for student in information:
+            try:
+                student[key]
+            except:
+                print("Invalid Value")
+                return []
             if student[key] == value:
                 del student[key]
                 finalInfo += [student]
