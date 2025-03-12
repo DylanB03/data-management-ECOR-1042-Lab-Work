@@ -183,6 +183,11 @@ def load_data(fileName: str,request: dict) -> list:
 # Place your add_average function after this line
 
 def add_average(info: list) -> list:
+    """
+    Returns a list containing a dictionary with each students information with their average grade as an additional key given the original student information list.
+    >>> add_average('studentmatList')
+    [{'School': 'GP', 'ID': 1, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6, 'AvgGrade': 5.5}, ... ]
+    """
     for student in info:
         student['AvgGrade'] = round((student['FallGrade'] + student['WinterGrade']) /2 , 2)
     return info
