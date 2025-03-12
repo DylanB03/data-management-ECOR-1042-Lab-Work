@@ -80,6 +80,54 @@ def student_school_list(fileName: str, school: str) -> list:
 #==========================================#
 # Place your load_data function after this line
 
+def load_data(fileName: str,request: dict) -> list:
+    """
+    Returns a list of all students information that matches the given dict except for the key value from a given dict and a given file name. A key value of All returns all information.
+
+    >>> load_data('student-mat.csv', {'Failures': 0})
+    [ {'School': 'GP', 'ID': 22, 'Age': 18, 'StudyTime':7.0, 'Health': 3, Absences': 7, 'FallGrade': 12, 'WinterGrade': 13},  {another element}, … ]
+
+    """
+
+    dataString = ""
+    file = open(fileName,"r")
+    for line in file:
+        dataString += line
+    file.close()
+    
+    dataString = dataString.split()
+    information = []
+    headers = dataString[0].split(',')
+    #create a list of all information
+    del dataString[0]
+    for student in dataString:
+        student=student.split(',')
+        currentDict = {}
+        for value in range(len(student)):
+            if student[value].isdigit():
+                currentDict[headers[value]] = int(student[value])
+            else:
+                try:
+                    currentDict[headers[value]] = float(student[value])
+                except:
+                    currentDict[headers[value]] = student[value]
+        information += [currentDict]
+
+    finalInfo = []
+    #if key is not all iterate through the information list and delete the key value given
+    key = ""
+    value = ""
+    for i in request.keys():
+        key = i
+        value = request[key]
+    if key != 'All':
+        for student in information:
+            if student[key] == value:
+                del student[key]
+                finalInfo += [student]
+    else:
+        return information
+    return finalInfo
 
 #==========================================#
 # Place your add_average function after this line
