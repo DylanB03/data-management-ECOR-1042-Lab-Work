@@ -33,24 +33,21 @@ def student_failures_list(filename: str, failures: int) -> list:
     """
     result_list = []    #the main list to be returned at end of function
 
-    dataString = ""
     # open the given file in reading mode and put it in a variable called csv
     file = open(filename, "r")
-    # iterate through the file and add it to the dataString variable so that the entire file is converted into a str
-    for line in file:
-        dataString += line
+    dataString = file.read()
     file.close()
 
-    #reads the first line only to get the headers
-    header_line = None
-    for line in dataString:
-        header_line = line.strip()
-        break
+    lines = dataString.splitlines()
 
+    if not lines:
+        return result_list  # return an empty list if file is empty
+
+    header_line = lines[0].strip()
     headers = header_line.split(",")
 
     # reads all the next lines after the initial header, extracts the info
-    for line in dataString:
+    for line in lines[1:]:
         line = line.strip()
         #skip empty line
         if not line:
