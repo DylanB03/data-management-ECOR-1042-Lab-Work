@@ -33,7 +33,7 @@ def student_failures_list(filename: str, failures: int) -> list:
     """
     result_list = []    #the main list to be returned at end of function
 
-    # open the given file in reading mode and put it in a variable called csv
+    # open the file and read entire file into a string
     file = open(filename, "r")
     dataString = file.read()
     file.close()
