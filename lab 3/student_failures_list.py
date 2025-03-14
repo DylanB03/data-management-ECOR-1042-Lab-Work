@@ -33,49 +33,55 @@ def student_failures_list(filename: str, failures: int) -> list:
     """
     result_list = []    #the main list to be returned at end of function
 
-    with open(filename, 'r') as file:
+    dataString = ""
+    # open the given file in reading mode and put it in a variable called csv
+    file = open(filename, "r")
+    # iterate through the file and add it to the dataString variable so that the entire file is converted into a str
+    for line in file:
+        dataString += line
+    file.close()
 
-        #reads the first line only to get the headers
-        header_line = None
-        for line in file:
-            header_line = line.strip()
-            break
+    #reads the first line only to get the headers
+    header_line = None
+    for line in dataString:
+        header_line = line.strip()
+        break
 
-        headers = header_line.split(",")
+    headers = header_line.split(",")
 
-        # reads all the next lines after the initial header, extracts the info
-        for line in file:
-            line = line.strip()
-            #skip empty line
-            if not line:
-                continue
+    # reads all the next lines after the initial header, extracts the info
+    for line in dataString:
+        line = line.strip()
+        #skip empty line
+        if not line:
+            continue
 
-            values = line.split(",")
+        values = line.split(",")
 
-            # find failures col pos = index
-            failures_index = headers.index("Failures")
+        # find failures col pos = index
+        failures_index = headers.index("Failures")
 
-            #change them to ints
-            current_failures = int(values[failures_index])
+        #change them to ints
+        current_failures = int(values[failures_index])
 
-            # cont if row failures equivalent to intended function input param
-            if current_failures == failures:
-                #make a dictionary for this case
-                student_dict = {}
-                for i, h in enumerate(headers):
-                    if h == "Failures":
-                        # Does not include failures column (handles ignore that redundant data)
-                        continue
-                    if h in ["ID", "Age", "Health", "Absences",
-                             "FG", "WG"]:
-                        student_dict[h] = int(values[i])
-                    elif h == "ST":
-                        student_dict[h] = float(values[i])
-                    else:
-                        student_dict[h] = values[i]
+        # cont if row failures equivalent to intended function input param
+        if current_failures == failures:
+            #make a dictionary for this case
+            student_dict = {}
+            for i, h in enumerate(headers):
+                if h == "Failures":
+                    # Does not include failures column (handles ignore that redundant data)
+                    continue
+                if h in ["ID", "Age", "Health", "Absences",
+                         "FG", "WG"]:
+                    student_dict[h] = int(values[i])
+                elif h == "ST":
+                    student_dict[h] = float(values[i])
+                else:
+                    student_dict[h] = values[i]
 
-                # Adds new student dictionary to the list of results
-                result_list.append(student_dict)
+            # Adds new student dictionary to the list of results
+            result_list.append(student_dict)
 
 
     return result_list
