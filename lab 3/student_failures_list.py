@@ -67,9 +67,9 @@ def student_failures_list(filename: str, failures: int) -> list:
                         # Does not include failures column (handles ignore that redundant data)
                         continue
                     if h in ["ID", "Age", "Health", "Absences",
-                             "FallGrade", "WinterGrade"]:
+                             "FG", "WG"]:
                         student_dict[h] = int(values[i])
-                    elif h == "StudyTime":
+                    elif h == "ST":
                         student_dict[h] = float(values[i])
                     else:
                         student_dict[h] = values[i]
