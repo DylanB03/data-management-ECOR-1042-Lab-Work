@@ -16,8 +16,10 @@ __team__ = "T-051"
 
 
 def student_health_list(filename: str, health: int) -> list[dict]:
-    """Return a list of students, stored as dictionaries, whose health values are equivalent to health, given a csv file. Each dictionary contains a student's school, ID, age, study time, failures, absenses, fall grades and winter grades.
+    """
+    Return a list of students, stored as dictionaries, whose health values are equivalent to health, given a csv file. Each dictionary contains a student's school, ID, age, study time, failures, absenses, fall grades and winter grades.
     Preconditions: 1 <= health <= 5.
+    
     >>> student_health_list('student-mat.csv', 2)
     [ {'School': 'MS', 'ID': 20, 'Age': 20, 'StudyTime': 1.0, 'Failures': 1,'Absences': 10, 'FallGrade': 9, 'WinterGrade': 11},{another element}, …]
     >>> student_health_list('student-mat.csv', 'health')
@@ -25,10 +27,12 @@ def student_health_list(filename: str, health: int) -> list[dict]:
     >>> student_health_list('student-mat.csv', 5)
     [ {'School': 'GP', 'ID': 4, 'Age': 15, 'StudyTime': 3.0, 'Failures': 0,'Absences': 2, 'FallGrade': 15, 'WinterGrade': 14},{another element}, …]
     """
+    
     data_str = ""
-    with open(filename, "r") as file:
-        for ch in file:
-            data_str += ch
+    file = open(filename, "r")
+    for ch in file:
+        data_str += ch
+    file.close()
 
     data_str = data_str.splitlines()
     category = data_str[0].split(',')
