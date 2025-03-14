@@ -288,6 +288,9 @@ def load_data(fileName: str,request: dict) -> list:
         for student in information:
             try:
                 student[key]
+                if key == "FallGrade" or key == "WinterGrade" or key == "Absences" or key == "StudyTime" or key == "ID":
+                    print("Invalid Value")
+                    return []
             except:
                 print("Invalid Value")
                 return []
