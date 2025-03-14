@@ -5,7 +5,7 @@
 __author__ = "Dylan Butz, Chloe Ouellette, Cameron MacGillivray, Arman Rahmani"
 
 # Update "" with your team (e.g. T102)
-__team__ = "T051"
+__team__ = "T-051"
 
 #==========================================#
 # Place your student_school_list function after this line
@@ -112,6 +112,61 @@ def student_health_list(filename: str, health: int) -> list[dict]:
 
 #==========================================#
 # Place your student_age_list function after this line
+def student_age_list(filename: str, age: int) -> list:
+    """
+
+    """
+    result_list = []    #the main list to be returned at end of function
+
+    # open the file and read entire file into a string
+    file = open(filename, "r")
+    dataString = file.read()
+    file.close()
+
+    lines = dataString.splitlines()
+
+    if not lines:
+        return result_list  # return an empty list if file is empty
+
+    header_line = lines[0].strip()
+    headers = header_line.split(",")
+
+    # reads all the next lines after the initial header, extracts the info
+    for line in lines[1:]:
+        line = line.strip()
+        #skip empty line
+        if not line:
+            continue
+
+        values = line.split(",")
+
+        age_index = headers.index("Age")
+
+        #change to ints
+        current_age = int(values[age_index])
+
+        # keep if row age equivalent to intended function input param
+        if current_age == age:
+            #make a dict
+            student_dict = {}
+            for i, h in enumerate(headers):
+                if h == "Age":
+                    # doesn't include age column
+                    continue
+                if h in ["ID", "Failures", "Health", "Absences",
+                         "FG", "WG"]:
+                    student_dict[h] = int(values[i])
+                elif h == "ST":
+                    student_dict[h] = float(values[i])
+                else:
+                    student_dict[h] = values[i]
+
+            result_list.append(student_dict)
+
+
+    return result_list
+#==========================================#
+# Place your student_failures_list function after this line
 def student_failures_list(filename: str, failures: int) -> list:
     """
      Return a list of students, each of which is a dictionary with the given number of failures.
@@ -132,110 +187,56 @@ def student_failures_list(filename: str, failures: int) -> list:
     """
     result_list = []    #the main list to be returned at end of function
 
-    with open(filename, 'r') as file:
-
-        #reads the first line only to get the headers
-        header_line = None
-        for line in file:
-            header_line = line.strip()
-            break
-
-        headers = header_line.split(",")
-
-        # reads all the next lines after the initial header, extracts the info
-        for line in file:
-            line = line.strip()
-            #skip empty line
-            if not line:
-                continue
-
-            values = line.split(",")
-
-            # find failures col pos = index
-            failures_index = headers.index("Failures")
-
-            #change them to ints
-            current_failures = int(values[failures_index])
-
-            # cont if row failures equivalent to intended function input param
-            if current_failures == failures:
-                #make a dictionary for this case
-                student_dict = {}
-                for i, h in enumerate(headers):
-                    if h == "Failures":
-                        # Does not include failures column (handles ignore that redundant data)
-                        continue
-                    if h in ["ID", "Age", "Health", "Absences",
-                             "FG", "WG"]:
-                        student_dict[h] = int(values[i])
-                    elif h == "ST":
-                        student_dict[h] = float(values[i])
-                    else:
-                        student_dict[h] = values[i]
-
-                # Adds new student dictionary to the list of results
-                result_list.append(student_dict)
-
-def student_age_list(fileName: str, age: int) -> list:
-    """
-    Return a list of students who are all the same age as the inputted age parameter.
-    If there is no student who are the inputted age, returns empty list.
-    
-    >>> student_age_list('student-mat.csv', 18)
-    [{'ID': 1, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {another element}, ... ]
-    >>> student_school_list('student-mat.csv', 0)
-    []
-    >>> student_school_list('student-mat.csv', 15)
-    [{'ID': 3, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}, {another element}, ...]
-    
-    """
-    dataString=""
-    #open the given file in reading mode and put it in a variable called csv
-    file = open(fileName, "r")
-    #iterate through the file and add it to the dataString variable so that the entire file is converted into a str
-    for line in file:
-        dataString+=line
+    # open the file and read entire file into a string
+    file = open(filename, "r")
+    dataString = file.read()
     file.close()
-    
-    #create a list splitting at each new line so each row is in a seperate index
-    dataString= dataString.splitlines()
-    #create the list that will contain the list we will return
-    studentInformation = []
-    #get all headers
-    headers = dataString[0].rsplit(',')
-    #get the location of the age and delete it from the list of headers
-    AgeIndex = headers.index('Age')
-    del headers[AgeIndex]
 
-    #iterate through each row (meaning each student) of the new list
-    for student in dataString:
-        #convert the string into an array
-        student = student.rsplit(',')
-        #if the age in the students information matches then add their data 
-        if(student[AgeIndex]==str(age)):
-            #delete the school information from the student 
-            del student[AgeIndex]
-            #create an empty dict then iterate through the students data and create new keys from the headers that match the students information
-            currentDict = {}
+    lines = dataString.splitlines()
 
-            for value in range(len(student)):
-                #convert to proper type
-                if student[value].isdigit():
-                    currentDict[headers[value]] = int(student[value])
+    if not lines:
+        return result_list  # return an empty list if file is empty
+
+    header_line = lines[0].strip()
+    headers = header_line.split(",")
+
+    # reads all the next lines after the initial header, extracts the info
+    for line in lines[1:]:
+        line = line.strip()
+        #skip empty line
+        if not line:
+            continue
+
+        values = line.split(",")
+
+        # find failures col pos = index
+        failures_index = headers.index("Failures")
+
+        #change them to ints
+        current_failures = int(values[failures_index])
+
+        # cont if row failures equivalent to intended function input param
+        if current_failures == failures:
+            #make a dictionary for this case
+            student_dict = {}
+            for i, h in enumerate(headers):
+                if h == "Failures":
+                    # Does not include failures column (handles ignore that redundant data)
+                    continue
+                if h in ["ID", "Age", "Health", "Absences",
+                         "FG", "WG"]:
+                    student_dict[h] = int(values[i])
+                elif h == "ST":
+                    student_dict[h] = float(values[i])
                 else:
-                    try:
-                        currentDict[headers[value]] = float(student[value])
-                    except:
-                        currentDict[headers[value]] = student[value]
-            #add the dict to a new index in the array
-            studentInformation += [currentDict]
+                    student_dict[h] = values[i]
 
-    return studentInformation
+            # Adds new student dictionary to the list of results
+            result_list.append(student_dict)
 
 
     return result_list
-#==========================================#
-# Place your student_failures_list function after this line
+
 
 
 #==========================================#

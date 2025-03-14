@@ -15,9 +15,6 @@ __team__ = "T-051"
 # Place your student_age_list function after this line
 def student_age_list(filename: str, age: int) -> list:
     """
-     Return a list of students, each of which is a dictionary with the given number of failures.
-    If there is no student with the intended number of failures, returns empty list.
-
 
     """
     result_list = []    #the main list to be returned at end of function
@@ -44,19 +41,18 @@ def student_age_list(filename: str, age: int) -> list:
 
         values = line.split(",")
 
-        # find age col pos = index
         age_index = headers.index("Age")
 
-        #change them to ints
+        #change to ints
         current_age = int(values[age_index])
 
-        # cont if row age equivalent to intended function input param
+        # keep if row age equivalent to intended function input param
         if current_age == age:
-            #make a dictionary for this case
+            #make a dict
             student_dict = {}
             for i, h in enumerate(headers):
                 if h == "Age":
-                    # Does not include age column (handles ignore that redundant data)
+                    # doesn't include age column
                     continue
                 if h in ["ID", "Failures", "Health", "Absences",
                          "FG", "WG"]:
@@ -66,7 +62,6 @@ def student_age_list(filename: str, age: int) -> list:
                 else:
                     student_dict[h] = values[i]
 
-            # Adds new student dictionary to the list of results
             result_list.append(student_dict)
 
 
