@@ -3,13 +3,13 @@
 # Remember to include docstring and type annotations for your functions
 
 # Update "" with your name (e.g., Cristina Ruiz Martin)
-__author__ = ""
+__author__ = "Arman Rahmani"
 
 # Update "" with your student number (e.g., 100100100)
-__student_number__ = ""
+__student_number__ = "101333091"
 
 # Update "" with your team (e.g. T-102, use the notation provided in the example)
-__team__ = ""
+__team__ = "T-051"
 
 #==========================================#
 # Place your student_age_list function after this line
