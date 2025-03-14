@@ -176,16 +176,17 @@ def student_failures_list(filename: str, failures: int) -> list:
                 # Adds new student dictionary to the list of results
                 result_list.append(student_dict)
 
-def student_school_list(fileName: str, school: str) -> list:
+def student_age_list(fileName: str, age: int) -> list:
     """
-    Return a list containing a dict with the age, ID, study time, number of failures, health, absences, fall grade, and winter grade, for each student who attended the school given a csv file and a school.
+    Return a list of students who are all the same age as the inputted age parameter.
+    If there is no student who are the inputted age, returns empty list.
     
-    >>> student_school_list('student-mat.csv','GP')
+    >>> student_age_list('student-mat.csv', 18)
     [{'ID': 1, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {another element}, ... ]
-    >>> student_school_list('student-mat.csv','hello')
+    >>> student_school_list('student-mat.csv', 0)
     []
-    >>> student_school_list('student-mat.csv','MS')
-    [{'ID': 320, 'Age': 18, 'StudyTime': 2, 'Failures': 0, 'Health': 5, 'Absences': 2, 'FallGrade': 11, 'WinterGrade': 11}, {another element}, ...]
+    >>> student_school_list('student-mat.csv', 15)
+    [{'ID': 3, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}, {another element}, ...]
     
     """
     dataString=""
@@ -202,18 +203,18 @@ def student_school_list(fileName: str, school: str) -> list:
     studentInformation = []
     #get all headers
     headers = dataString[0].rsplit(',')
-    #get the location of the school header and delete it from the list of headers
-    schoolIndex = headers.index('Age')
-    del headers[schoolIndex]
+    #get the location of the age and delete it from the list of headers
+    AgeIndex = headers.index('Age')
+    del headers[AgeIndex]
 
     #iterate through each row (meaning each student) of the new list
     for student in dataString:
         #convert the string into an array
         student = student.rsplit(',')
-        #if the school in the students information matches then add their data 
-        if(student[schoolIndex]==school):
+        #if the age in the students information matches then add their data 
+        if(student[AgeIndex]==str(age)):
             #delete the school information from the student 
-            del student[schoolIndex]
+            del student[AgeIndex]
             #create an empty dict then iterate through the students data and create new keys from the headers that match the students information
             currentDict = {}
 
