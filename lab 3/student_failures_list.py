@@ -15,18 +15,14 @@ __team__ = "T-051"
 # Place your student_failures_list function after this line
 def student_failures_list(filename: str, failures: int) -> list:
     """
-     Return a list of students, each of which is a dictionary with the given number of failures.
+    Return a list of students, each of which is a dictionary with the given number of failures.
     If there is no student with the intended number of failures, returns empty list.
 
-     >>> student_failures_list('student-mat.csv', 0)
-    [{'School': 'GP', 'ID': 201, 'Age': 18, 'StudyTime': 7.0, 'Health': 3,
-      'Absences': 7, 'FallGrade': 12, 'WinterGrade': 13},
-     {... more students with 0 failures ...}]
+    >>> student_failures_list('student-mat.csv', 0) # doctest: +ELLIPSIS
+    [{'School': 'GP', 'ID': 1, 'Age': 18, 'StudyTime': 2.5, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, ...]
 
-    >>> student_failures_list('student-mat.csv', 2)
-    [{'School': 'GP', 'ID': 125, 'Age': 17, 'StudyTime': 3.0, 'Health': 4,
-      'Absences': 5, 'FallGrade': 10, 'WinterGrade': 9},
-     {... more students with 2 failures ...}]
+    >>> student_failures_list('student-mat.csv', 2) # doctest: +ELLIPSIS
+    [{'School': 'GP', 'ID': 26, 'Age': 16, 'StudyTime': 1.5, 'Health': 5, 'Absences': 14, 'FallGrade': 6, 'WinterGrade': 9}, ...]
 
     >>> student_failures_list('student-mat.csv', 220)
     []
@@ -70,9 +66,9 @@ def student_failures_list(filename: str, failures: int) -> list:
                     # Does not include failures column (handles ignore that redundant data)
                     continue
                 if h in ["ID", "Age", "Health", "Absences",
-                         "FG", "WG"]:
+                         "FallGrade", "WinterGrade"]:
                     student_dict[h] = int(values[i])
-                elif h == "ST":
+                elif h == "StudyTime":
                     student_dict[h] = float(values[i])
                 else:
                     student_dict[h] = values[i]
@@ -83,4 +79,15 @@ def student_failures_list(filename: str, failures: int) -> list:
 
     return result_list
 
-# Do NOT include a main script in your submission
+"""def print_student_failures_blocks():
+    for failures in range(4):  # iterates from 0 to 5
+        print(f"Students with {failures} failure{'s' if failures != 1 else ''}:")
+        student_list = student_failures_list("student-mat.csv", failures)
+        for student in student_list:
+            print(student)
+        print()  # prints an empty line to separate blocks 
+
+# Call the function
+print_student_failures_blocks()
+
+"""
