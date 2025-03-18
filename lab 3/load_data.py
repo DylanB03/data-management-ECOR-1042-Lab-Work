@@ -117,15 +117,11 @@ def student_age_list(filename: str, age: int) -> list:
     Return a list of students, each of which is of the given age in the parameter.
     If there is no student with the intended number of failures, returns empty list.
 
-     >>> student_age_list('student-mat.csv', 18)
-    [{'School': 'GP', 'ID': 1, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3,
-      'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6},
-     {... more students with age as 18  ...}]
+    >>> student_age_list('student-mat.csv', 18)
+    [{'School': 'GP', 'ID': 1, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, ...]
 
     >>> student_failures_list('student-mat.csv', 17)
-    [{'School': 'GP', 'ID': 2, 'StudyTime': 2.0, 'Failures': 0, 'Health': 3,
-      'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5},
-     {... more students with age as 17 ...}]
+    [{'School': 'GP', 'ID': 2, 'StudyTime': 2.0, 'Failures': 0, 'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5}, ...]
 
     >>> student_age_list('student-mat.csv', 0)
     []
