@@ -88,7 +88,7 @@ def student_health_list(filename: str, health: int) -> list[dict]:
     file.close()
 
     data_str = data_str.splitlines()
-    category = data_str[0].split(',')
+    category = data_str[0].strip().split(',')
     students = []
     health_index = category.index('Health')
     del category[health_index]
