@@ -15,7 +15,6 @@ __team__ = "T-051"
 #==========================================#
 # Do not modify the code alreayd provided.
 
-
 def test_add_average() -> list[int]:
     # Complete the function with your test cases
     passed = 0
