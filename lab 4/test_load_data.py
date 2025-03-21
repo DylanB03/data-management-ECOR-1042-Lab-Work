@@ -1,7 +1,7 @@
 # ECOR 1042 Lab 4 - team submission
 
 # import load_data module here
-
+import load_data
 # Update "" with your the name of the active members of the team
 __author__ = "Dylan Butz, Chloe Ouellette, Cameron MacGillivray, Arman Rahmani"
 
@@ -11,7 +11,6 @@ __team__ = "T-051"
 #==========================================#
 
 # Place test_return_list function here
-import load_data
 def test_return_list() -> list[int]:
     # Complete the function with your test cases
     # test that student_school_list returns a list (3 different test cases required
