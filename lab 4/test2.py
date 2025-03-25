@@ -24,7 +24,7 @@ def test_return_list_correct_length() -> list[int]:
     case_answers = [3, 4, 0]
     for i in range(len(cases)):
         try:
-            assert len(load_data.student_school_list('student-test.csv', cases[i])) == case_answers[i]
+            assert len(load_data.student_school_list('student-test.csv', cases[i])) == case_answers[i], "Test case " + str(i+1) + " for student school list failed. An input of " + str((cases[i])) + " should return a list length value of " + str(case_answers[i])
             passed += 1
         except:
             failed += 1
@@ -34,7 +34,7 @@ def test_return_list_correct_length() -> list[int]:
     case_answers = [4, 3, 0]
     for i in range(len(cases)):
         try:
-            assert len(load_data.student_age_list('student-test.csv', cases[i])) == case_answers[i]
+            assert len(load_data.student_age_list('student-test.csv', cases[i])) == case_answers[i], "Test case " + str(i+1) + " for student age list failed. An input of " + str((cases[i])) + " should return a list length value of " + str(case_answers[i])
             passed += 1
         except:
             failed += 1            
@@ -44,7 +44,7 @@ def test_return_list_correct_length() -> list[int]:
     case_answers = [1, 3, 0]
     for i in range(len(cases)):
         try:
-            assert len(load_data.student_health_list('student-test.csv', cases[i])) == case_answers[i]
+            assert len(load_data.student_health_list('student-test.csv', cases[i])) == case_answers[i], "Test case " + str(i+1) + " for student health list failed. An input of " + str((cases[i])) + " should return a list length value of " + str(case_answers[i])
             passed += 1
         except:
             failed += 1            
@@ -54,63 +54,63 @@ def test_return_list_correct_length() -> list[int]:
     case_answers = [11, 0, 1]
     for i in range(len(cases)):
         try:
-            assert len(load_data.student_failures_list('student-test.csv', cases[i])) == case_answers[i]
+            assert len(load_data.student_failures_list('student-test.csv', cases[i])) == case_answers[i], "Test case " + str(i+1) + " for student failures list failed. An input of " + str((cases[i])) + " should return a list length value of " + str(case_answers[i])
             passed += 1
         except:
             failed += 1
             
     # test that load_data returns a list  with the correct length (6 different test cases required)
     try:
-        assert len(load_data.load_data('student-test.csv', {'Failures': 0})) == 11
+        assert len(load_data.load_data('student-test.csv', {'Failures': 0})) == 11, "Test case 1 for load_data failed. An input of 'Failures': 0 should return a list length value of 11"
         passed += 1
     except:
         failed += 1   
           
     try:
-        assert len(load_data.load_data('student-test.csv', {'Age': 16})) == 2
+        assert len(load_data.load_data('student-test.csv', {'Age': 16})) == 2, "Test case 2 for load_data failed. An input of 'Age': 16 should return a list length value of 2"
         passed += 1
     except:
         failed += 1     
 
     try:
-        assert len(load_data.load_data('student-test.csv', {'Health': 0})) == 0
+        assert len(load_data.load_data('student-test.csv', {'Health': 0})) == 0, "Test case 3 for load_data failed. An input of 'Health': 0 should return a list length value of 0"
         passed += 1
     except:
         failed += 1             
             
     try:
-        assert len(load_data.load_data('student-test.csv', {'School': "A"})) == 0
+        assert len(load_data.load_data('student-test.csv', {'School': "A"})) == 0, "Test case 4 for load_data failed. An input of 'School': \"A\" should return a list length value of 0"
         passed += 1
     except:
         failed += 1  
     
     try:
-        assert len(load_data.load_data('student-test.csv', {'Age': 0})) == 0
+        assert len(load_data.load_data('student-test.csv', {'Age': 0})) == 0, "Test case 5 for load_data failed. An input of 'Age': 0 should return a list length value of 0"
         passed += 1
     except:
         failed += 1     
         
     try:
-        assert len(load_data.load_data('student-test.csv', {'Health': 3})) == 8
+        assert len(load_data.load_data('student-test.csv', {'Health': 3})) == 8, "Test case 6 for load_data failed. An input of 'Health': 3 should return a list length value of 8"
         passed += 1
     except:
         failed += 1             
     
     # test that add_average returns a list   with the correct length (3 different test cases required)
     try:
-        assert len(load_data.add_average([{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {'School': 'GP', 'ID': 100, 'Age': 17, 'StudyTime': 2, 'Failures': 0, 'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5}, {'School': 'GP', 'ID': 20, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}])) == 3
+        assert len(load_data.add_average([{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {'School': 'GP', 'ID': 100, 'Age': 17, 'StudyTime': 2, 'Failures': 0, 'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5}, {'School': 'GP', 'ID': 20, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}])) == 3, "Test case 1 for add_average failed. Given input should return a list length value of 0"
         passed += 1
     except:
         failed += 1        
         
     try:
-        assert len(load_data.add_average([])) == 0
+        assert len(load_data.add_average([])) == 0, "Test case 2 for add_average failed. Inputting an empty list should return a list length value of 0"
         passed += 1
     except:
         failed += 1        
         
     try:
-        assert len(load_data.add_average([{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {'School': 'GP', 'ID': 100, 'Age': 17, 'StudyTime': 2, 'Failures': 0, 'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5}])) == 2
+        assert len(load_data.add_average([{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {'School': 'GP', 'ID': 100, 'Age': 17, 'StudyTime': 2, 'Failures': 0, 'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5}])) == 2, "Test case 3 for add_average failed. Given input should return a list length value of 2"
         passed += 1
     except:
         failed += 1
