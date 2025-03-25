@@ -23,7 +23,7 @@ def test_return_list() -> list[int]:
     failed = 0
     for test in cases:
         try:
-            assert isinstance(load_data.student_school_list('student-test.csv',test),list)
+            assert isinstance(load_data.student_school_list('student-test.csv',test),list), "test_return_list() case 1, student_school_list: " + test + "failed"
             passed +=1
         except:
             failed += 1
@@ -31,7 +31,7 @@ def test_return_list() -> list[int]:
     cases = [0,17,50]
     for test in cases:
         try:
-            assert isinstance(load_data.student_age_list('student-test.csv',test),list)
+            assert isinstance(load_data.student_age_list('student-test.csv',test),list), "test_return_list() case 2, student_age_list: " + test + "failed"
             passed +=1
         except:
             failed += 1
@@ -39,7 +39,7 @@ def test_return_list() -> list[int]:
     cases = [-10,3,1]
     for test in cases:
         try:
-            assert isinstance(load_data.student_health_list('student-test.csv',test),list)
+            assert isinstance(load_data.student_health_list('student-test.csv',test),list), "test_return_list() case 3, student_health_list: " + test + "failed"
             passed +=1
         except:
             failed += 1
@@ -47,7 +47,7 @@ def test_return_list() -> list[int]:
     cases = [0,1,5]
     for test in cases:
         try:
-            assert isinstance(load_data.student_failures_list('student-test.csv',test),list)
+            assert isinstance(load_data.student_failures_list('student-test.csv',test),list), "test_return_list() case 4, student_failures_list: " + test + "failed"
             passed +=1
         except:
             failed += 1
@@ -55,7 +55,7 @@ def test_return_list() -> list[int]:
     cases = [{"Failures": 0},{"ID":10},{"Age":18},{"Health":0},{"All":1000},{"hello":1050}]
     for test in cases:
         try:
-            assert isinstance(load_data.load_data('student-test.csv',test),list)
+            assert isinstance(load_data.load_data('student-test.csv',test),list), "test_return_list() case 5, load_data: " + test + "failed"
             passed +=1
         except:
             failed += 1
@@ -63,7 +63,7 @@ def test_return_list() -> list[int]:
     cases = [load_data.load_data('student-test.csv',{"Failures":0}),load_data.student_school_list('student-test.csv',"GP"),load_data.student_age_list("student-test.csv",0)]
     for test in cases:
         try:
-            assert isinstance(load_data.add_average(test),list)
+            assert isinstance(load_data.add_average(test),list), "test_return_list() case 6, add_average: " + test + "failed"
             passed +=1
         except:
             print(6)
