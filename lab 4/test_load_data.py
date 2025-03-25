@@ -197,11 +197,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
         try:
             school_result = load_data.student_school_list(
                 filename, school_names[i])
-            if school_result == [] and school_dict_first[i] == []:
+            if school_result == []:
+                assert school_result == school_dict_first[i], "Second school test failed"
                 success += 1
             else:
-                assert school_result[0] == school_dict_first[i], "Test 1 failed"
-                assert school_result[-1] == school_dict_last[i], "Test 2 failed"
+                assert school_result[0] == school_dict_first[i], "First half of " + str(
+                    school_names[i]) + " school test failed"
+                assert school_result[-1] == school_dict_last[i], "Second half of " + str(
+                    school_names[i]) + " school test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -216,11 +219,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
     for i in range(len(age_values)):
         try:
             age_result = load_data.student_age_list(filename, age_values[i])
-            if age_result == [] and school_dict_first[i] == []:
+            if age_result == []:
+                assert age_result == age_dict_first[i], "Second age test failed"
                 success += 1
             else:
-                assert age_result[0] == age_dict_first[i], "Test 5 failed"
-                assert age_result[-1] == age_dict_last[i], "Test 6 failed"
+                assert age_result[0] == age_dict_first[i], "First half of " + \
+                    str(age_values[i]) + " age test failed"
+                assert age_result[-1] == age_dict_last[i], "Second half of " + \
+                    str(age_values[i]) + " age test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -237,11 +243,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
         try:
             health_result = load_data.student_health_list(
                 filename, health_values[i])
-            if health_result == [] and health_dict_first[i] == []:
+            if health_result == []:
+                assert health_result == health_dict_first[i], "Second health test failed"
                 success += 1
             else:
-                assert health_result[0] == health_dict_first[i], "Test 3 failed"
-                assert health_result[-1] == health_dict_last[i], "Test 4 failed"
+                assert health_result[0] == health_dict_first[i], "First half of " + str(
+                    health_values[i]) + " health test failed"
+                assert health_result[-1] == health_dict_last[i], "Second half of " + str(
+                    health_values[i]) + " health test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -249,7 +258,7 @@ def test_return_correct_dict_inside_list() -> list[int]:
 
     # test that student_failures_list returns a correct dictionary inside the list (3 different test cases required)
     failures_values = [0, 'ALL', 3]
-    failures_dict_first = [{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Health': 3, 'Absences': 6, 'FallGrade':5, 'WinterGrade': 6}, [
+    failures_dict_first = [{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, [
     ], {'School': 'GP', 'ID': 20, 'Age': 15, 'StudyTime': 2, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}]
     failures_dict_last = [{'School': 'MS', 'ID': 32, 'Age': 18, 'StudyTime': 3, 'Health': 5, 'Absences': 2, 'FallGrade': 9, 'WinterGrade': 8}, [
     ], {'School': 'GP', 'ID': 20, 'Age': 15, 'StudyTime': 2, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}]
@@ -257,11 +266,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
         try:
             failures_result = load_data.student_failures_list(
                 filename, failures_values[i])
-            if failures_result == [] and failures_dict_first[i] == []:
+            if failures_result == []:
+                assert failures_result == failures_dict_first[i], "Second failures test failed"
                 success += 1
             else:
-                assert failures_result[0] == failures_dict_first[i], "Test 7 failed"
-                assert failures_result[-1] == failures_dict_last[i], "Test 8 failed"
+                assert failures_result[0] == failures_dict_first[i], "First half of " + str(
+                    failures_values[i]) + " failures test failed"
+                assert failures_result[-1] == failures_dict_last[i], "Second half of " + str(
+                    failures_values[i]) + " failures test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -270,17 +282,21 @@ def test_return_correct_dict_inside_list() -> list[int]:
     load_values = [{'Failures': 0}, {'All': -1}, {'ID': 0},
                    {'Hello': 1000}, {'School': 'GP'}, {'Health': 500}]
     load_dict_first = [{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5,
-                                                                                                                                              'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, [], [], {'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, []]
+                                                                                                                                               'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, [], [], {'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, []]
     load_dict_last = [{'School': 'MS', 'ID': 32, 'Age': 18, 'StudyTime': 3, 'Health': 5, 'Absences': 2, 'FallGrade': 9, 'WinterGrade': 8}, {'School': 'MS', 'ID': 32, 'Age': 18, 'StudyTime': 3, 'Failures': 0,
-                                                                                                                                             'Health': 5, 'Absences': 2, 'FallGrade': 9, 'WinterGrade': 8}, [], [], {'ID': 20, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}, []]
+                                                                                                                                            'Health': 5, 'Absences': 2, 'FallGrade': 9, 'WinterGrade': 8}, [], [], {'ID': 20, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}, []]
     for i in range(len(load_values)):
         try:
             load_result = load_data.load_data(filename, load_values[i])
-            if load_result == [] and load_dict_first[i] == []:
+            if load_result == []:
+                assert load_result == load_dict_first[i], str(
+                    load_values[i]) + " load test failed"
                 success += 1
             else:
-                assert load_result[0] == load_dict_first[i], "Test 9 failed"
-                assert load_result[-1] == load_dict_last[i], "Test 10 failed"
+                assert load_result[0] == load_dict_first[i], "First half of " + \
+                    str(load_values[i]) + " load test failed"
+                assert load_result[-1] == load_dict_last[i], "Second half of " + \
+                    str(load_values[i]) + " load test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -296,11 +312,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
     for i in range(len(average_values)):
         try:
             average_result = load_data.add_average(average_values[i])
-            if average_result == [] and average_dict_first[i] == []:
+            if average_result == []:
+                assert average_result == average_dict_first[i], "Second average test failed"
                 success += 1
             else:
-                assert average_result[0]['School'] == average_dict_first[i]['School'], "Test 11 failed"
-                assert average_result[-1]['AvgGrade'] == average_dict_last[i]['AvgGrade'], "Test 12 failed"
+                assert average_result[0]['School'] == average_dict_first[i]['School'], "First half of " + str(
+                    average_values[i]) + " average test failed"
+                assert average_result[-1]['AvgGrade'] == average_dict_last[i]['AvgGrade'], "Second half of " + str(
+                    average_values[i]) + " average test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
