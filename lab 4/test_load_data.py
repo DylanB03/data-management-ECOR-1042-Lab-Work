@@ -313,7 +313,6 @@ def test_return_correct_dict_inside_list() -> list[int]:
 
 # Place test_add_average function here
 def test_add_average() -> list[int]:
-    # Complete the function with your test cases
     passed = 0
     failed = 0
 
