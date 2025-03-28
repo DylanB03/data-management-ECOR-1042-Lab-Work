@@ -50,7 +50,7 @@ def sort_students_age_bubble(students: list[dict], rank: str) -> str:
 # Place your sort_students_time_selection function after this line
 def sort_students_time_selection(students: list[dict], order: str) -> str:
     """
-    Return a string stating whether the dictionaries in students have been sorted. The list will be sorted based on whether "A" (for ascending) or "D" (for descending) was typed as a value for order. 
+    Return a string stating whether the dictionaries in students have been sorted by study time. The list will be sorted based on whether "A" (for ascending) or "D" (for descending) was typed as a value for order. "Empty list" will be returned if the list is empty. List will not be sorted if StudyTime is not a key in the dictionary and "List not sorted. StudyTime key not present."
     >>> a = []
     >>> sort_students_time_selection(a, "A")
     < a is not modified >
