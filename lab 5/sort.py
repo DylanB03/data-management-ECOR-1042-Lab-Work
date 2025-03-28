@@ -172,6 +172,40 @@ def sort_students_failures_bubble(student: list[dict], order: str) -> str:
 
 #==========================================#
 # Place your sort function after this line
-
+def sort(students: list[dict], order: str, attribute: str) -> str:
+    """
+    Return a string stating whether or not the list of dictionaries students has been sorted in the order specified (either "A" for ascending or "D" for descending). They will be sorted according to the attribute, so either by "Age", "StudyTime", "AvgGrade" or "Failures". If an empty list is inserted, "Empty list." will be returned. If an invalid attribute is inputted, "Invalid input, the list cannot be sorted by attribute." will be returned.
+    >>> a = []
+    >>> sort(a, "D", "Age")
+    <a is not modified>
+    Empty list.
+    
+    >>> a = [{"School":"GP"},{"School":"MS"}]
+    >>>sort(a, "D", "School")
+    <a is not modified>
+    Invalid input, the list cannot be sorted by School.
+    
+    >>> a = [{"Age":15,"School":"GP"},{"Age":19,"School":"GP"}]
+    >>>sort(a, "D", "School")
+    <a is not modified>
+    List sorted.
+    """
+    if attribute != ("Age" or "StudyTime" or "AvgGrade" or "Failures"):
+        return "Invalid input, the list cannot be sorted by " + attribute + "."
+    elif students == []:
+        return "Empty list."
+    else:
+        if attribute == "Age":
+            sorted_age = sort_students_age_bubble(students, order)
+            return sorted_age
+        elif attribute == "StudyTime":
+            sorted_time = sort_students_time_selection(students, order)
+            return sorted_time
+        elif attribute == "AvgGrade":
+            sorted_avg = sort_students_avg_insertion(students, order)
+            return sorted_avg
+        else:
+            sorted_failures = sort_students_failures_bubble(students, order)
+            return sorted_failures
 
 # Do NOT include a main script in your submission
