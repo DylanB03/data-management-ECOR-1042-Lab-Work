@@ -112,73 +112,83 @@ def student_health_list(filename: str, health: int) -> list[dict]:
 
 #==========================================#
 # Place your student_age_list function after this line
-def student_age_list(filename: str, age: int) -> list:
-    """
-    Return a list of students, each of which is of the given age in the parameter.
-    If there is no student with the intended number of failures, returns empty list.
+def test_add_average() -> list[int]:
+    passed = 0
+    failed = 0
 
-     >>> student_age_list('student-mat.csv', 18)
-    [{'School': 'GP', 'ID': 1, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3,
-      'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6},
-     {... more students with age as 18  ...}]
+    # test that the function returns an empty list when it is called with an empty list
+    test_input = []
+    result = load_data.add_average(test_input.copy())
+    try:
+        assert result == [], "Empty list test failed: expected [] but got " + str(result)
+    except AssertionError:
+        failed += 1
+    else:
+        passed += 1
 
-    >>> student_failures_list('student-mat.csv', 17)
-    [{'School': 'GP', 'ID': 2, 'StudyTime': 2.0, 'Failures': 0, 'Health': 3,
-      'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5},
-     {... more students with age as 17 ...}]
+    base_dict = {
+        "School": "GP",
+        "ID": 1,
+        "Age": 18,
+        "StudyTime": 2.5,
+        "Failures": 0,
+        "Health": 3,
+        "Absences": 6,
+        "FallGrade": 5,
+        "WinterGrade": 6
+    }
 
-    >>> student_age_list('student-mat.csv', 0)
-    []
-    """
-    result_list = []    #the main list to be returned at end of function
+    #all possible scenarios to be tested for in set
+    scenarios = {
+        "all": None,
+        "missing_school": "School",
+        "missing_health": "Health",
+        "missing_age": "Age",
+        "missing_failures": "Failures",
+    }
 
-    # open the file and read entire file into a string
-    file = open(filename, "r")
-    dataString = file.read()
-    file.close()
+    # test that the function does not change the length of the list provided as input parameter (5 different test cases required)
+    # test that the function inscrememnts the number of keys of the dictionary inside the list by one  (5 different test cases required)
+    # test that the G_Avg value is properly calculated  (5 different test cases required)
 
-    lines = dataString.splitlines()
+    for scenario, key_to_remove in scenarios.items():
+        for i in range(3):
 
-    if not lines:
-        return result_list  # return an empty list if file is empty
+            test_dict = base_dict.copy()
+            test_dict["ID"] += i
+            test_dict["Failures"] += 1
+            test_dict["WinterGrade"] += 1
 
-    header_line = lines[0].strip()
-    headers = header_line.split(",")
+            #average expected
+            expected_avg = round((test_dict["FallGrade"] + test_dict["WinterGrade"]) / 2, 2)
 
-    # reads all the next lines after the initial header, extracts the info
-    for line in lines[1:]:
-        line = line.strip()
-        #skip empty line
-        if not line:
-            continue
+            original_key_count = len(test_dict)
+            try:
+                test_dict.pop(key_to_remove)
+            except KeyError:
+                pass
+            finally:
+                original_key_count = len(test_dict)
 
-        values = line.split(",")
+            input_list = [test_dict.copy()]
+            result_list = load_data.add_average(input_list)
 
-        age_index = headers.index("Age")
+            try:
+                #First check that list length unchanged.
+                assert len(result_list) == 1, "Scenario '" + scenario + "', iteration " + str(i) + " failed: expected list length 1 but got " + str(len(result_list))
+                #Second check that dict has one new key vs original dict
+                assert len(result_list[0]) == original_key_count + 1, "Scenario '" + scenario + "', iteration " + str(i) + " failed: expected dictionary key count " + str(original_key_count + 1) + " but got " + str(len(result_list[0]))
+                #third check that AvgGrade is calc correctly.
+                assert "AvgGrade" in result_list[0], "Scenario '" + scenario + "', iteration " + str(i) + " failed: missing 'AvgGrade' key"
+                assert result_list[0]["AvgGrade"] == expected_avg, "Scenario '" + scenario + "', iteration " + str(i) + " failed: expected AvgGrade " + str(expected_avg) + " but got " + str(result_list[0]["AvgGrade"])
+            except AssertionError:
+                failed += 1
+            else:
+                passed += 1
 
-        #change to ints
-        current_age = int(values[age_index])
+    # return the a list with the number of tests that passed and the number that failed
+    return [passed, failed]
 
-        # keep if row age equivalent to intended function input param
-        if current_age == age:
-            #make a dict
-            student_dict = {}
-            for i, h in enumerate(headers):
-                if h == "Age":
-                    # doesn't include age column
-                    continue
-                if h in ["ID", "Failures", "Health", "Absences",
-                         "FG", "WG"]:
-                    student_dict[h] = int(values[i])
-                elif h == "ST":
-                    student_dict[h] = float(values[i])
-                else:
-                    student_dict[h] = values[i]
-
-            result_list.append(student_dict)
-
-
-    return result_list
 #==========================================#
 # Place your student_failures_list function after this line
 def student_failures_list(filename: str, failures: int) -> list:

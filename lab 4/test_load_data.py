@@ -78,105 +78,97 @@ def test_return_list_correct_length() -> list[int]:
     case_answers = [3, 4, 0]
     for i in range(len(cases)):
         try:
-            assert len(load_data.student_school_list('student-test.csv', cases[i])) == case_answers[i]
+            assert len(load_data.student_school_list('student-test.csv', cases[i])) == case_answers[i], "Test case " + str(i+1) + " for student school list failed. An input of " + str((cases[i])) + " should return a list length value of " + str(case_answers[i])
             passed += 1
         except:
             failed += 1
-
+                       
     # test that student_age_list returns a list  with the correct length (3 different test cases required)
     cases = [18, 15, 2]
     case_answers = [4, 3, 0]
     for i in range(len(cases)):
         try:
-            assert len(load_data.student_age_list('student-test.csv', cases[i])) == case_answers[i]
+            assert len(load_data.student_age_list('student-test.csv', cases[i])) == case_answers[i], "Test case " + str(i+1) + " for student age list failed. An input of " + str((cases[i])) + " should return a list length value of " + str(case_answers[i])
             passed += 1
         except:
-            failed += 1
+            failed += 1            
 
-            # test that student_health_list returns a list with the correct length (3 different test cases required)
+    # test that student_health_list returns a list with the correct length (3 different test cases required)
     cases = [1, 5, 2]
     case_answers = [1, 3, 0]
     for i in range(len(cases)):
         try:
-            assert len(load_data.student_health_list('student-test.csv', cases[i])) == case_answers[i]
+            assert len(load_data.student_health_list('student-test.csv', cases[i])) == case_answers[i], "Test case " + str(i+1) + " for student health list failed. An input of " + str((cases[i])) + " should return a list length value of " + str(case_answers[i])
             passed += 1
         except:
-            failed += 1
+            failed += 1            
 
-            # test that student_failures_list returns a list with the correct length(3 different test cases required)
+    # test that student_failures_list returns a list with the correct length(3 different test cases required)
     cases = [0, 5, 1]
     case_answers = [11, 0, 1]
     for i in range(len(cases)):
         try:
-            assert len(load_data.student_failures_list('student-test.csv', cases[i])) == case_answers[i]
+            assert len(load_data.student_failures_list('student-test.csv', cases[i])) == case_answers[i], "Test case " + str(i+1) + " for student failures list failed. An input of " + str((cases[i])) + " should return a list length value of " + str(case_answers[i])
             passed += 1
         except:
             failed += 1
-
+            
     # test that load_data returns a list  with the correct length (6 different test cases required)
     try:
-        assert len(load_data.load_data('student-test.csv', {'Failures': 0})) == 11
+        assert len(load_data.load_data('student-test.csv', {'Failures': 0})) == 11, "Test case 1 for load_data failed. An input of 'Failures': 0 should return a list length value of 11"
         passed += 1
     except:
-        failed += 1
+        failed += 1   
+          
+    try:
+        assert len(load_data.load_data('student-test.csv', {'Age': 16})) == 2, "Test case 2 for load_data failed. An input of 'Age': 16 should return a list length value of 2"
+        passed += 1
+    except:
+        failed += 1     
 
     try:
-        assert len(load_data.load_data('student-test.csv', {'Age': 16})) == 2
+        assert len(load_data.load_data('student-test.csv', {'Health': 0})) == 0, "Test case 3 for load_data failed. An input of 'Health': 0 should return a list length value of 0"
         passed += 1
     except:
-        failed += 1
-
+        failed += 1             
+            
     try:
-        assert len(load_data.load_data('student-test.csv', {'Health': 0})) == 0
+        assert len(load_data.load_data('student-test.csv', {'School': "A"})) == 0, "Test case 4 for load_data failed. An input of 'School': \"A\" should return a list length value of 0"
         passed += 1
     except:
-        failed += 1
-
+        failed += 1  
+    
     try:
-        assert len(load_data.load_data('student-test.csv', {'School': "A"})) == 0
+        assert len(load_data.load_data('student-test.csv', {'Age': 0})) == 0, "Test case 5 for load_data failed. An input of 'Age': 0 should return a list length value of 0"
         passed += 1
     except:
-        failed += 1
-
+        failed += 1     
+        
     try:
-        assert len(load_data.load_data('student-test.csv', {'Age': 0})) == 0
+        assert len(load_data.load_data('student-test.csv', {'Health': 3})) == 8, "Test case 6 for load_data failed. An input of 'Health': 3 should return a list length value of 8"
         passed += 1
     except:
-        failed += 1
-
+        failed += 1             
+    
+    # test that add_average returns a list   with the correct length (3 different test cases required)
     try:
-        assert len(load_data.load_data('student-test.csv', {'Health': 3})) == 8
+        assert len(load_data.add_average([{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {'School': 'GP', 'ID': 100, 'Age': 17, 'StudyTime': 2, 'Failures': 0, 'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5}, {'School': 'GP', 'ID': 20, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}])) == 3, "Test case 1 for add_average failed. Given input should return a list length value of 0"
         passed += 1
     except:
-        failed += 1
-
-        # test that add_average returns a list   with the correct length (3 different test cases required)
+        failed += 1        
+        
     try:
-        assert len(load_data.add_average([{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0,
-                                           'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6},
-                                          {'School': 'GP', 'ID': 100, 'Age': 17, 'StudyTime': 2, 'Failures': 0,
-                                           'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5},
-                                          {'School': 'GP', 'ID': 20, 'Age': 15, 'StudyTime': 2, 'Failures': 3,
-                                           'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}])) == 3
+        assert len(load_data.add_average([])) == 0, "Test case 2 for add_average failed. Inputting an empty list should return a list length value of 0"
         passed += 1
     except:
-        failed += 1
-
+        failed += 1        
+        
     try:
-        assert len(load_data.add_average([])) == 0
+        assert len(load_data.add_average([{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {'School': 'GP', 'ID': 100, 'Age': 17, 'StudyTime': 2, 'Failures': 0, 'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5}])) == 2, "Test case 3 for add_average failed. Given input should return a list length value of 2"
         passed += 1
     except:
         failed += 1
-
-    try:
-        assert len(load_data.add_average([{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0,
-                                           'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6},
-                                          {'School': 'GP', 'ID': 100, 'Age': 17, 'StudyTime': 2, 'Failures': 0,
-                                           'Health': 3, 'Absences': 4, 'FallGrade': 5, 'WinterGrade': 5}])) == 2
-        passed += 1
-    except:
-        failed += 1
-
+        
     # return the a list with the number of tests that passed and the number that failed
     return [passed, failed]
 
@@ -197,11 +189,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
         try:
             school_result = load_data.student_school_list(
                 filename, school_names[i])
-            if school_result == [] and school_dict_first[i] == []:
+            if school_result == []:
+                assert school_result == school_dict_first[i], "Second school test failed"
                 success += 1
             else:
-                assert school_result[0] == school_dict_first[i], "Test 1 failed"
-                assert school_result[-1] == school_dict_last[i], "Test 2 failed"
+                assert school_result[0] == school_dict_first[i], "First half of " + str(
+                    school_names[i]) + " school test failed"
+                assert school_result[-1] == school_dict_last[i], "Second half of " + str(
+                    school_names[i]) + " school test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -216,11 +211,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
     for i in range(len(age_values)):
         try:
             age_result = load_data.student_age_list(filename, age_values[i])
-            if age_result == [] and school_dict_first[i] == []:
+            if age_result == []:
+                assert age_result == age_dict_first[i], "Second age test failed"
                 success += 1
             else:
-                assert age_result[0] == age_dict_first[i], "Test 5 failed"
-                assert age_result[-1] == age_dict_last[i], "Test 6 failed"
+                assert age_result[0] == age_dict_first[i], "First half of " + \
+                    str(age_values[i]) + " age test failed"
+                assert age_result[-1] == age_dict_last[i], "Second half of " + \
+                    str(age_values[i]) + " age test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -237,11 +235,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
         try:
             health_result = load_data.student_health_list(
                 filename, health_values[i])
-            if health_result == [] and health_dict_first[i] == []:
+            if health_result == []:
+                assert health_result == health_dict_first[i], "Second health test failed"
                 success += 1
             else:
-                assert health_result[0] == health_dict_first[i], "Test 3 failed"
-                assert health_result[-1] == health_dict_last[i], "Test 4 failed"
+                assert health_result[0] == health_dict_first[i], "First half of " + str(
+                    health_values[i]) + " health test failed"
+                assert health_result[-1] == health_dict_last[i], "Second half of " + str(
+                    health_values[i]) + " health test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -249,7 +250,7 @@ def test_return_correct_dict_inside_list() -> list[int]:
 
     # test that student_failures_list returns a correct dictionary inside the list (3 different test cases required)
     failures_values = [0, 'ALL', 3]
-    failures_dict_first = [{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Health': 3, 'Absences': 6, 'FallGrade':5, 'WinterGrade': 6}, [
+    failures_dict_first = [{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, [
     ], {'School': 'GP', 'ID': 20, 'Age': 15, 'StudyTime': 2, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}]
     failures_dict_last = [{'School': 'MS', 'ID': 32, 'Age': 18, 'StudyTime': 3, 'Health': 5, 'Absences': 2, 'FallGrade': 9, 'WinterGrade': 8}, [
     ], {'School': 'GP', 'ID': 20, 'Age': 15, 'StudyTime': 2, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}]
@@ -257,11 +258,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
         try:
             failures_result = load_data.student_failures_list(
                 filename, failures_values[i])
-            if failures_result == [] and failures_dict_first[i] == []:
+            if failures_result == []:
+                assert failures_result == failures_dict_first[i], "Second failures test failed"
                 success += 1
             else:
-                assert failures_result[0] == failures_dict_first[i], "Test 7 failed"
-                assert failures_result[-1] == failures_dict_last[i], "Test 8 failed"
+                assert failures_result[0] == failures_dict_first[i], "First half of " + str(
+                    failures_values[i]) + " failures test failed"
+                assert failures_result[-1] == failures_dict_last[i], "Second half of " + str(
+                    failures_values[i]) + " failures test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -270,17 +274,21 @@ def test_return_correct_dict_inside_list() -> list[int]:
     load_values = [{'Failures': 0}, {'All': -1}, {'ID': 0},
                    {'Hello': 1000}, {'School': 'GP'}, {'Health': 500}]
     load_dict_first = [{'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, {'School': 'GP', 'ID': 10, 'Age': 18, 'StudyTime': 2.5,
-                                                                                                                                              'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, [], [], {'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, []]
+                                                                                                                                               'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, [], [], {'ID': 10, 'Age': 18, 'StudyTime': 2.5, 'Failures': 0, 'Health': 3, 'Absences': 6, 'FallGrade': 5, 'WinterGrade': 6}, []]
     load_dict_last = [{'School': 'MS', 'ID': 32, 'Age': 18, 'StudyTime': 3, 'Health': 5, 'Absences': 2, 'FallGrade': 9, 'WinterGrade': 8}, {'School': 'MS', 'ID': 32, 'Age': 18, 'StudyTime': 3, 'Failures': 0,
-                                                                                                                                             'Health': 5, 'Absences': 2, 'FallGrade': 9, 'WinterGrade': 8}, [], [], {'ID': 20, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}, []]
+                                                                                                                                            'Health': 5, 'Absences': 2, 'FallGrade': 9, 'WinterGrade': 8}, [], [], {'ID': 20, 'Age': 15, 'StudyTime': 2, 'Failures': 3, 'Health': 3, 'Absences': 10, 'FallGrade': 7, 'WinterGrade': 8}, []]
     for i in range(len(load_values)):
         try:
             load_result = load_data.load_data(filename, load_values[i])
-            if load_result == [] and load_dict_first[i] == []:
+            if load_result == []:
+                assert load_result == load_dict_first[i], str(
+                    load_values[i]) + " load test failed"
                 success += 1
             else:
-                assert load_result[0] == load_dict_first[i], "Test 9 failed"
-                assert load_result[-1] == load_dict_last[i], "Test 10 failed"
+                assert load_result[0] == load_dict_first[i], "First half of " + \
+                    str(load_values[i]) + " load test failed"
+                assert load_result[-1] == load_dict_last[i], "Second half of " + \
+                    str(load_values[i]) + " load test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -296,11 +304,14 @@ def test_return_correct_dict_inside_list() -> list[int]:
     for i in range(len(average_values)):
         try:
             average_result = load_data.add_average(average_values[i])
-            if average_result == [] and average_dict_first[i] == []:
+            if average_result == []:
+                assert average_result == average_dict_first[i], "Second average test failed"
                 success += 1
             else:
-                assert average_result[0]['School'] == average_dict_first[i]['School'], "Test 11 failed"
-                assert average_result[-1]['AvgGrade'] == average_dict_last[i]['AvgGrade'], "Test 12 failed"
+                assert average_result[0]['School'] == average_dict_first[i]['School'], "First half of " + str(
+                    average_values[i]) + " average test failed"
+                assert average_result[-1]['AvgGrade'] == average_dict_last[i]['AvgGrade'], "Second half of " + str(
+                    average_values[i]) + " average test failed"
                 success += 1
         except AssertionError as msg:
             print(msg)
@@ -313,7 +324,6 @@ def test_return_correct_dict_inside_list() -> list[int]:
 
 # Place test_add_average function here
 def test_add_average() -> list[int]:
-    # Complete the function with your test cases
     passed = 0
     failed = 0
 

@@ -9,11 +9,85 @@ __team__ = "T-051"
 
 #==========================================#
 # Place your sort_students_age_bubble function after this line
+def sort_students_age_bubble(students: list[dict], rank: str) -> str:
+    """ 
+    Returns a string of a list of students' dictionaries, bubble sorted in ascending or descending order based off age. If the inputted list is empty, the function returns the string “Empty list.”. If “Age” is not a key in the dictionary, the function returns the string “List not sorted. Age key not present.”.
+    
+    >>> a = []
+    >>> sort_students_age_bubble(a, "A")
+    'Empty list.'
+    
+    >>> a = [{"Age":15,"School":"GP"},{"Age":19,"School":"GP"}]
+    >>> sort_students_age_bubble(a, "D")
+    'List sorted.'
+    
+    >>> a = [{"StudyTime":20}, {"Studytime":12}]
+    >>> sort_students_age_bubble(a, "D")
+    'List not sorted. Age key not present.'
+    """
+    
+    if not students:
+        return "Empty list."
 
+    if not all("Age" in student for student in students):
+        return "List not sorted. Age key not present."
+
+    if rank == "A":
+        for i in range(len(students)):
+            for j in range(len(students) - i - 1):
+                if students[j]["Age"] > students[j + 1]["Age"]:
+                    students[j], students[j + 1] = students[j + 1], students[j]
+
+    elif rank == "D":      
+        for i in range(len(students)):
+            for j in range(len(students)- i - 1):
+                if students[j]["Age"] < students[j + 1]["Age"]:
+                    students[j], students[j + 1] = students[j + 1], students[j]
+
+    return "List sorted."
 
 #==========================================#
 # Place your sort_students_time_selection function after this line
+def sort_students_time_selection(students: list[dict], order: str) -> str:
+    """
+    Return a string stating whether the dictionaries in students have been sorted by study time. The list will be sorted based on whether "A" (for ascending) or "D" (for descending) was typed as a value for order. "Empty list" will be returned if the list is empty. List will not be sorted if StudyTime is not a key in the dictionary and "List not sorted. StudyTime key not present."
+    >>> a = []
+    >>> sort_students_time_selection(a, "A")
+    < a is not modified >
+    'Empty list.'
 
+    >>> a = [{"StudyTime":10, "School":"GP"}, {"StudyTime":19, "School":"MS"}]
+    >>> sort_students_time_selection(a, "D")
+    < a is now sorted: a = [{"StudyTime":19, "School":"MS"}, {"StudyTime":10, "School":"GP"}]
+    'List sorted.'
+
+    >>> a = [{"School":"GP"}, {"School":"MS"}]
+    >>> sort_students_time_selection (a, "D")
+    <a is not modified>
+    List not sorted. StudyTime key not present.
+    """
+    if students == []:
+        return 'Empty list.'
+    else:
+        for student in students:
+            if order == "A" and "StudyTime" in student.keys():
+                for i in range(len(students)):
+                    min_index = i
+                    for j in range(i + 1, len(students)):
+                        if students[min_index]['StudyTime'] > students[j]['StudyTime']:
+                            min_index = j
+                    students[i], students[min_index] = students[min_index], students[i]
+                return 'List sorted.'
+            elif order == "D" and "StudyTime" in student.keys():
+                for i in range(len(students)):
+                    max_index = i
+                    for j in range(i + 1, len(students)):
+                        if students[max_index]['StudyTime'] < students[j]['StudyTime']:
+                            max_index = j
+                    students[i], students[max_index] = students[max_index], students[i]
+                return 'List sorted.'
+            else:
+                return "List not sorted. StudyTime key not present."
 
 #==========================================#
 # Place your sort_students_avg_insertion function after this line
@@ -56,10 +130,82 @@ def sort_students_avg_insertion(students: list, rank: str) -> str:
 
 #==========================================#
 # Place your sort_students_failures_bubble function after this line
+def sort_students_failures_bubble(student: list[dict], order: str) -> str:
+    """
+    Sort a list of student dicts with a bubble sort algo for "Failures".
 
+    >>> students = []
+    >>> sort_students_failures_bubble(students, "A")
+    'Empty list.'
+
+    >>> students = [{"School": "GP"}, {"School": "MS"}]
+    >>> sort_students_failures_bubble(students, "D")
+    'List not sorted. Failures key not present.'
+
+    >>> students = [{"Failures": 19, "School": "GP"}, {"Failures": 10, "School": "MS"}]
+    >>> sort_students_failures_bubble(students, "A")
+    'List sorted.'
+
+    """
+    if not student:
+        return "Empty list."
+
+    # Check if "Failures" key exists in the dictionaries.
+    if "Failures" not in student[0]:
+        return "List not sorted. Failures key not present."
+
+    n = len(student)
+    # Bubble sort algo
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if order == "A":
+                # For the ascending order, swap if the current element's Failures is greater than the next.
+                if student[j]["Failures"] > student[j + 1]["Failures"]:
+                    student[j], student[j + 1] = student[j + 1], student[j]
+            elif order == "D":
+                # For the descending order, swap if the current element's Failures less than the next.
+                if student[j]["Failures"] < student[j + 1]["Failures"]:
+                    student[j], student[j + 1] = student[j + 1], student[j]
+            else: #Shouldn't be needed to pass
+                pass
+    return "List sorted."
 
 #==========================================#
 # Place your sort function after this line
-
+def sort(students: list[dict], order: str, attribute: str) -> str:
+    """
+    Return a string stating whether or not the list of dictionaries students has been sorted in the order specified (either "A" for ascending or "D" for descending). They will be sorted according to the attribute, so either by "Age", "StudyTime", "AvgGrade" or "Failures". If an empty list is inserted, "Empty list." will be returned. If an invalid attribute is inputted, "Invalid input, the list cannot be sorted by attribute." will be returned.
+    >>> a = []
+    >>> sort(a, "D", "Age")
+    <a is not modified>
+    Empty list.
+    
+    >>> a = [{"School":"GP"},{"School":"MS"}]
+    >>>sort(a, "D", "School")
+    <a is not modified>
+    Invalid input, the list cannot be sorted by School.
+    
+    >>> a = [{"Age":15,"School":"GP"},{"Age":19,"School":"GP"}]
+    >>>sort(a, "D", "School")
+    <a is not modified>
+    List sorted.
+    """
+    if attribute != ("Age" or "StudyTime" or "AvgGrade" or "Failures"):
+        return "Invalid input, the list cannot be sorted by " + attribute + "."
+    elif students == []:
+        return "Empty list."
+    else:
+        if attribute == "Age":
+            sorted_age = sort_students_age_bubble(students, order)
+            return sorted_age
+        elif attribute == "StudyTime":
+            sorted_time = sort_students_time_selection(students, order)
+            return sorted_time
+        elif attribute == "AvgGrade":
+            sorted_avg = sort_students_avg_insertion(students, order)
+            return sorted_avg
+        else:
+            sorted_failures = sort_students_failures_bubble(students, order)
+            return sorted_failures
 
 # Do NOT include a main script in your submission
