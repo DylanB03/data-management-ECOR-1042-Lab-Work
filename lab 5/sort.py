@@ -190,22 +190,18 @@ def sort(students: list[dict], order: str, attribute: str) -> str:
     <a is not modified>
     List sorted.
     """
-    if attribute != ("Age" or "StudyTime" or "AvgGrade" or "Failures"):
+    if attribute not in ["Age", "StudyTime", "AvgGrade", "Failures"]:
         return "Invalid input, the list cannot be sorted by " + attribute + "."
-    elif students == []:
+    elif not students:
         return "Empty list."
     else:
         if attribute == "Age":
-            sorted_age = sort_students_age_bubble(students, order)
-            return sorted_age
+            return sort_students_age_bubble(students, order)
         elif attribute == "StudyTime":
-            sorted_time = sort_students_time_selection(students, order)
-            return sorted_time
+            return sort_students_time_selection(students, order)
         elif attribute == "AvgGrade":
-            sorted_avg = sort_students_avg_insertion(students, order)
-            return sorted_avg
+            return sort_students_avg_insertion(students, order)
         else:
-            sorted_failures = sort_students_failures_bubble(students, order)
-            return sorted_failures
+            return sort_students_failures_bubble(students, order)
 
 # Do NOT include a main script in your submission
