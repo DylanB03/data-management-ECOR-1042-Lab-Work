@@ -34,14 +34,37 @@ def curve_fit(data: list, compare: str, order: int) -> str:
         try:
             yval = person["AvgGrade"]
             xval = person[compare]
-            if xval != '' and yval != '':
-                y += [float(yval)]
-                x += [float(xval)]
+            yval = float(yval)
+            xval=float(xval)
+            y += [yval]
+            x += [xval]
         except:
-            pass
+            continue
 
     rep = ""
+    covered = []
+    newx = []
+    newy = []
+    for value in range(len(x)):
+        avgy=0
+        num = 0
+        if x[value] not in covered:
+            try:
+                covered += [x[value]]
+                for index in range(len(x)):
+                    if x[index] == x[value]:
+                        avgy += y[index]
+                        num += 1
+                newx += [x[value]]
+                newy += [avgy/num]
+            except:
+                continue
+
+    x = newx
+    y= newy
+
     power = len(np.polyfit(x,y,len(x)-1).tolist())
+
     if order>power:
         for value in np.polyfit(x,y,len(x)-1).tolist():
             if power != 0:
@@ -62,6 +85,7 @@ def curve_fit(data: list, compare: str, order: int) -> str:
             else:
                 rep += str(value)
             order -= 1
+
     return "y = " + rep
 
 
