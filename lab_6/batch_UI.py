@@ -25,6 +25,8 @@ def batch_UI():
     L;student.csv;School;GP
     S;Age;D;N
     H;Failures
+    <assume text above is from file>
+
     Please enter the name of the file where your commands are stored: <filename>
     Data loaded
     List sorted. <You selected not to display>
