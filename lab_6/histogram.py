@@ -48,7 +48,9 @@ def histogram(students: list[dict], attribute: str) -> int:
         x_bins = np.linspace(0, max_value, 11)
         x_vals = [0] * 10
         for i in range(0, 10):
-            x_vals[i] = f'(round(x_bins[i], 2) to (round(x_bins[i + 1], 2))'
+            first_x = round(x_bins[i], 2)
+            second_x = round(x_bins[i + 1], 2)
+            x_vals[i] = f'{first_x} to {second_x}'
         y_vals = [0] * 10
         for key in val_dict.keys():
             for i in range(10):
@@ -62,4 +64,3 @@ def histogram(students: list[dict], attribute: str) -> int:
     plt.bar(x_vals, y_vals)
     plt.show()
     return max_value
-# Do NOT include a main script in your submission
