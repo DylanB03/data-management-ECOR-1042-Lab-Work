@@ -1,19 +1,13 @@
 # ECOR 1042 Lab 3 - Individual submission for student_failures_list function
 
-# Remember to include docstring and type annotations for your functions
-
-# Update "" with your name (e.g., Cristina Ruiz Martin)
 __author__ = "Cameron MacGillivray"
 
-# Update "" with your student number (e.g., 100100100)
 __student_number__ = "101354857"
 
-# Update "" with your team (e.g. T-102, use the notation provided in the example)
 __team__ = "T-051"
 
 
 # ==========================================#
-# Place your student_failures_list function after this line
 def student_failures_list(filename: str, failures: int) -> list:
     """
     Return a list of students, each of which is a dictionary with the given number of failures.
@@ -32,7 +26,7 @@ def student_failures_list(filename: str, failures: int) -> list:
     """
     result_list = []  # The main list to be returned at the end of the function
 
-    # Open the file and read entire file into a string using try/except to catch file errors
+    # Open the fiel and read fully into a string using try/except
     try:
         file = open(filename, "r")
         dataString = file.read()
@@ -42,7 +36,7 @@ def student_failures_list(filename: str, failures: int) -> list:
 
     lines = dataString.splitlines()
 
-    # Instead of checking if lines is empty with an if, we try to access the first element.
+    # Try access first element
     try:
         header_line = lines[0].strip()
     except IndexError:
@@ -52,7 +46,7 @@ def student_failures_list(filename: str, failures: int) -> list:
     # Assert that headers exist
     assert len(headers) > 0, "Assertion failed: Header row is empty, no headers available."
 
-    # Get the index of the 'Failures' column. If it does not exist, index() will throw a ValueError.
+    # Get index of the Failures column. If it does not exist, else index() throws a ValueError.
     try:
         failures_index = headers.index("Failures")
     except ValueError as e:
@@ -69,7 +63,7 @@ def student_failures_list(filename: str, failures: int) -> list:
         "StudyTime": float,
     }
 
-    # Process each data row starting from the second line
+    # Process each data row starting from line 2
     for line in lines[1:]:
         # Use try/except to simulate "if line is empty" by attempting to access its first character.
         try:
