@@ -38,18 +38,21 @@ def histogram(students: list[dict], attribute: str) -> int:
     if isinstance(students[0][attribute], str):
         x_vals += val_dict.keys()
         y_vals += val_dict.values()
-        max_val = -1
+        max_value = -1
 
     elif isinstance(students[0][attribute], (float, int)):
-        max_val = max(student[attribute] for student in students)
-        temp_x = np.linspace(0, max_val, 11)
+        max_value = students[0][attribute]
+        for student in students:
+            if student[attribute] >= max_value:
+                max_value = student[attribute]
+        x_bins = np.linspace(0, max_value, 11)
         x_vals = [0] * 10
         for i in range(0, 10):
-            x_vals[i] = f'(round(temp_x[i], 2) to (round(temp_x[i + 1], 2))'
+            x_vals[i] = f'(round(x_bins[i], 2) to (round(x_bins[i + 1], 2))'
         y_vals = [0] * 10
         for key in val_dict.keys():
             for i in range(10):
-                if temp_x[i] <= float(key) < temp_x[i + 1]:
+                if x_bins[i] <= float(key) < x_bins[i + 1]:
                     y_vals[i] += 1
 
     fig = plt.figure()
@@ -58,6 +61,5 @@ def histogram(students: list[dict], attribute: str) -> int:
     plt.ylabel('Number of students')
     plt.bar(x_vals, y_vals)
     plt.show()
-    return max_val
+    return max_value
 # Do NOT include a main script in your submission
-
