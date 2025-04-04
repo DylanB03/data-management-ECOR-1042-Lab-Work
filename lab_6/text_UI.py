@@ -29,8 +29,8 @@ file to be read, or any other parameter appropriate to the previous modules.
 #==========================================#
 # Place your script for your text_UI after this line
 
-from lab_3 import load_data
-from lab_5 import sort
+import load_data
+import sort
 import curve_fit
 import histogram
 
