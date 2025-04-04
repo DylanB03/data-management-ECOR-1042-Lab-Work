@@ -9,6 +9,23 @@ __student_number__ = "101354857"
 # Update "" with your team (e.g. T-102, use the notation provided in the example)
 __team__ = "T-051"
 
+"""
+!
+! !
+! ! !
+! ! ! ! PLEASE SEE README  !
+! ! !
+! !
+!
+
+This module provides the full text-based user interface that incorporates functionality from
+various previous lab submisisons, including curve_fit, histogram, load_data and sort.
+
+As such, the program can be run, and all former programmed functionality can be used 
+simply from the terminal, inputting parameters when requested for order of curve fit, 
+file to be read, or any other parameter appropriate to the previous modules.
+
+"""
 #==========================================#
 # Place your script for your text_UI after this line
 
@@ -68,7 +85,7 @@ def text_UI():
                 "failures": "Failures"
             }
 
-            sort_attr_input = input("Please enter the attribute you want to use for sorting: ").strip()
+            sort_attr_input = input("Please enter the attribute you want to use for sorting:\n'Age', 'Failures', 'AvgGrade', 'StudyTime': ").strip()
             attr_lower = sort_attr_input.lower()
             if attr_lower in valid_attributes:
                 sort_attr = valid_attributes[attr_lower]
