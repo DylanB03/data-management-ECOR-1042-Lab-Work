@@ -28,80 +28,104 @@ def display_menu():
 
 def text_UI():
     data_loaded = False
-    data = None  # This will hold the loaded dataset
+    data = None  # Holds all data
     while True:
         display_menu()
         command = input("Please type your command: ").strip()
-        # Process the command (case-insensitive)
+
+        # Load Data Option
         if command.lower() == 'l':
-            # Load Data Command
             filename = input("Please enter the name of the file: ").strip()
             filter_attr = input("Please enter the attribute to use as a filter: ").strip()
-            # Build the request dictionary depending on user input
+
             if filter_attr.lower() == "all":
+                # No filtering
                 request = {"All": None}
             else:
+                # Filter by (attribute = value)
                 filter_value = input("Please enter the value of the attribute: ").strip()
                 request = {filter_attr: filter_value}
-            # Call the load_data module's function (assumed to compute AvgGrade)
+
             data = load_data.load_data(filename, request)
+
             if data is not None and data != []:
                 data_loaded = True
                 print("Data loaded")
             else:
                 print("Error loading data.")
 
+        # Sort Data Option
         elif command.lower() == 's':
-            # Sort Data Command
             if not data_loaded:
                 print("File not loaded. Please, load a file first.")
                 continue
-            sort_attr = input("Please enter the attribute you want to use for sorting: ").strip()
+
+            # Allows multiple varying capitalization, since personal testing led to a bunch of issues unless strictly follow what's in the file, like "age", "AGE", "Age" to sort by "Age".
+            valid_attributes = {
+                "age": "Age",
+                "studytime": "StudyTime",
+                "avggrade": "AvgGrade",
+                "failures": "Failures"
+            }
+
+            sort_attr_input = input("Please enter the attribute you want to use for sorting: ").strip()
+            attr_lower = sort_attr_input.lower()
+            if attr_lower in valid_attributes:
+                sort_attr = valid_attributes[attr_lower]
+            else:
+                print(f"Invalid input, the list cannot be sorted by {sort_attr_input}.")
+                continue
+
             order = input("Ascending (A) or Descending (D) order: ").strip()
             display_choice = input("Do you want to display the data? (Y/N): ").strip()
-            # Call the sort module's function
+
             sort_message = sort.sort(data, order, sort_attr)
+
             if display_choice.lower() == 'y':
                 print(data)
             else:
                 print("<<<You selected not to display>>>")
+
             print(sort_message)
 
+        # Curve Fit Option
         elif command.lower() == 'c':
-            # Curve Fit Command
             if not data_loaded:
                 print("File not loaded. Please, load a file first.")
                 continue
-            fit_attr = input("Please enter the attribute you want to use to find the best fit for AvgGrade: ").strip()
+
+            fit_attr_input = input("Please enter the attribute you want to use to find the best fit for AvgGrade: ").strip()
+
             poly_order_str = input("Please enter the order of the polynomial to be fitted: ").strip()
             try:
                 poly_order = int(poly_order_str)
             except ValueError:
                 print("Invalid polynomial order. Please enter an integer.")
                 continue
-            # Call the curve_fit module's function which returns the equation as a string
-            equation = curve_fit.curve_fit(data, fit_attr, poly_order)
+
+            equation = curve_fit.curve_fit(data, fit_attr_input, poly_order)
             print(equation)
 
+        # Histogram Option
         elif command.lower() == 'h':
-            # Histogram Command
             if not data_loaded:
                 print("File not loaded. Please, load a file first.")
                 continue
+
             hist_attr = input("Please enter the attribute you want for plotting: ").strip()
-            # The histogram function both displays the plot and returns a value based on attribute type.
+
             result = histogram.histogram(data, hist_attr)
             if result == -1:
                 print("Histogram displayed for categorical attribute.")
             else:
                 print("Histogram displayed. Maximum value:", result)
 
+        # Exit Option
         elif command.lower() == 'e':
-            # Exit Command
             break
 
+        # Invalid Case Handling
         else:
-            # Invalid command handling:
             if not data_loaded:
                 print("No such command.")
             else:
@@ -111,8 +135,4 @@ def text_UI():
 if __name__ == "__main__":
     text_UI()
 
-
 # You are allowed to create auxiliary functions
-
-
-
