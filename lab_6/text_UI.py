@@ -61,6 +61,10 @@ def text_UI():
             else:
                 # Filter by (attribute = value)
                 filter_value = input("Please enter the value of the attribute: ").strip()
+                try:
+                    filter_value = int(filter_value)
+                except:
+                    filter_value = filter_value
                 request = {filter_attr: filter_value}
 
             data = load_data.load_data(filename, request)
