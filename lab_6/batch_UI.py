@@ -50,7 +50,7 @@ def batch_UI():
                 if attribute != "School":
                     attribute_num = int(attribute_num)
  
-            data = load_data.add_average(load_data.load_data(filename, (attribute, attribute_num)))
+            data = load_data.add_average(load_data.load_data(filename, {attribute: attribute_num}))
             print("Data Loaded\n")
             data_loaded = True 
             
