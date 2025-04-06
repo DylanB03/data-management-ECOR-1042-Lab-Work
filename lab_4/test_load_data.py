@@ -330,11 +330,12 @@ def test_add_average() -> list[int]:
     # test that the function returns an empty list when it is called with an empty list
     test_input = []
     result = load_data.add_average(test_input.copy())
-    if result == []:
-        passed += 1
-    else:
+    try:
+        assert result == [], "Empty list test failed: expected [] but got " + str(result)
+    except AssertionError:
         failed += 1
-
+    else:
+        passed += 1
 
     base_dict = {
         "School": "GP",
@@ -373,34 +374,30 @@ def test_add_average() -> list[int]:
             expected_avg = round((test_dict["FallGrade"] + test_dict["WinterGrade"]) / 2, 2)
 
             original_key_count = len(test_dict)
-            if key_to_remove is not None:
+            try:
                 test_dict.pop(key_to_remove)
+            except KeyError:
+                pass
+            finally:
                 original_key_count = len(test_dict)
 
             input_list = [test_dict.copy()]
             result_list = load_data.add_average(input_list)
 
-            #First check that list length unchanged.
-            if len(result_list) != 1:
+            try:
+                #First check that list length unchanged.
+                assert len(result_list) == 1, "Scenario '" + scenario + "', iteration " + str(i) + " failed: expected list length 1 but got " + str(len(result_list))
+                #Second check that dict has one new key vs original dict
+                assert len(result_list[0]) == original_key_count + 1, "Scenario '" + scenario + "', iteration " + str(i) + " failed: expected dictionary key count " + str(original_key_count + 1) + " but got " + str(len(result_list[0]))
+                #third check that AvgGrade is calc correctly.
+                assert "AvgGrade" in result_list[0], "Scenario '" + scenario + "', iteration " + str(i) + " failed: missing 'AvgGrade' key"
+                assert result_list[0]["AvgGrade"] == expected_avg, "Scenario '" + scenario + "', iteration " + str(i) + " failed: expected AvgGrade " + str(expected_avg) + " but got " + str(result_list[0]["AvgGrade"])
+            except AssertionError:
                 failed += 1
-                continue
-
-            #Second check that dict has one new key vs original dict
-            if len(result_list[0]) != original_key_count + 1:
-                failed += 1
-                continue
-
-            #third check that AvgGrade is calc correctly.
-            if "AvgGrade" not in result_list[0]:
-                failed += 1
-                continue
-            if result_list[0]["AvgGrade"] != expected_avg:
-                failed += 1
-                continue
-
-            passed += 1
+            else:
+                passed += 1
 
     # return the a list with the number of tests that passed and the number that failed
-    return [passed,failed]
+    return [passed, failed]
 
 # Do NOT include a main script in your submission

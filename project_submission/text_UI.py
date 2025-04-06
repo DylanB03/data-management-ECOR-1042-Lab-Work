@@ -19,7 +19,7 @@ __team__ = "T-051"
 !
 
 This module provides the full text-based user interface that incorporates functionality from
-various previous lab submisisons, including curve_fit, histogram, load_data and sort.
+various previous lab submissions, including curve_fit, histogram, load_data and sort.
 
 As such, the program can be run, and all former programmed functionality can be used 
 simply from the terminal, inputting parameters when requested for order of curve fit, 
@@ -85,9 +85,10 @@ def text_UI():
                 "failures": "Failures"
             }
 
+            # The user enters the attribute to use in sorting
             sort_attr_input = input("Please enter the attribute you want to use for sorting:\n'Age', 'Failures', 'AvgGrade', 'StudyTime': ").strip()
             attr_lower = sort_attr_input.lower()
-            if attr_lower in valid_attributes:
+            if attr_lower in valid_attributes: #check if it is one of the valid attributes to sort by, otherwise presents error message
                 sort_attr = valid_attributes[attr_lower]
             else:
                 print(f"Invalid input, the list cannot be sorted by {sort_attr_input}.")
