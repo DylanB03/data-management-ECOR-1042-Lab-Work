@@ -53,6 +53,14 @@ def text_UI():
         # Load Data Option
         if command.lower() == 'l':
             filename = input("Please enter the name of the file: ").strip()
+            try:
+                # Try opening the file to check its existence
+                with open(filename, 'r') as f:
+                    pass
+            except FileNotFoundError:
+                print("File not found. Please try again.")
+                continue
+
             filter_attr = input("Please enter the attribute to use as a filter: ").strip()
             if filter_attr.lower() == "all":
                 request = {"All": None}
