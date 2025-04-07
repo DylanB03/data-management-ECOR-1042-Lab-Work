@@ -33,11 +33,13 @@ def batch_UI():
     List sorted. <You selected not to display>
     <Histograms with Failures will be shown>
     """
+    # user inputs filename with commands
     user_filename = input("Please enter the name of the file where your commands are stored: ")
     file = open(user_filename, 'r')
     data = []
     data_loaded = False
 
+    # loading the data from the file
     for line in file:
         commands_seq = line.strip().split(";")
         if commands_seq[0].upper() == "L":
@@ -51,8 +53,10 @@ def batch_UI():
                     request[attribute] = int(request[attribute])
             data = load_data.add_average(load_data.load_data(filename, request))
             print("Data Loaded\n")
+            # indicate that data has been loaded from the file into our variable
             data_loaded = True
 
+        # sorts the loaded data if that's the inputted command
         elif commands_seq[0].upper() == "S":
             if data_loaded:
                 sort.sort(data, commands_seq[2], commands_seq[1])
@@ -62,6 +66,7 @@ def batch_UI():
             else:
                 print("You must load a file first before data may be sorted")
 
+        # creates a curve fit for a specific attribute of the student's data
         elif commands_seq[0].upper() == "C":
             if len(data) == 0:
                 print("Student list is empty")
@@ -72,16 +77,17 @@ def batch_UI():
             else:
                 print("You must load a file first before data be given a curve fit")
 
+        # plots a histogram for a specific attribute of the student's data
         elif commands_seq[0].upper() == "H":
             if data_loaded:
                 histogram_attribute = commands_seq[1]
                 histogram.histogram(data, histogram_attribute)
             else:
                 print("You must load a file first before data can be graphed")
-
+                
+        # exits program
         elif commands_seq[0].upper() == "E":
             break
-
 
 if __name__ == "__main__":
     batch_UI()
