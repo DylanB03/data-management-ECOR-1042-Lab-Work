@@ -94,38 +94,38 @@ def sort_students_time_selection(students: list[dict], order: str) -> str:
 
 def sort_students_avg_insertion(students: list, rank: str) -> str:
     """
-    Sorts a given list containing dicts based on average grades, either ascending or descending, and returns whether or not it was sorted.
-    
+    Sorts a given list containing dicts based on average grades using insertion sort.
+    Implements ascending insertion sort if rank is "A" and descending insertion sort if rank is "D".
+
     >>> sort_students_avg_insertion([], "D")
     "Empty list."
-    >>> sort_students_avg_insertion([{"AvgGrade":7.2,"School":"GP"}, {"AvgGrade":9.1,"School":"MS"}], "D")
+    >>> sort_students_avg_insertion([{"AvgGrade": 7.2, "School": "GP"}, {"AvgGrade": 9.1, "School": "MS"}], "D")
     "List sorted."
-    >>> sort_students_avg_insertion([{"School":"GP"}, {"School":"MS"}], "D")
+    >>> sort_students_avg_insertion([{"School": "GP"}, {"School": "MS"}], "D")
     "List not sorted. AvgGrade key not present."
     """
-    if len(students)==0:
+    if not students:
         return "Empty list."
-    
-    for index in range(1,len(students)):
-        try:
-            key = students[index]
-            value = key["AvgGrade"]
-            j = index - 1
-        except:
-            return "List not sorted. AvgGrade key not present."
-        while j >= 0 and value < students[j]["AvgGrade"]:
-            students[j+1] = students[j]
-            j -=1
-        students[j+1] = key
-    
-    if rank == "D":
-        for index in range(0,len(students)//2):
-            temp = students[index]
-            students[index]= students[len(students)-1-index]
-            students[len(students)-1-index] = temp
+    try:
+        # Insertion sort directly for the chosen order
+        for i in range(1, len(students)):
+            key_item = students[i]
+            key_value = key_item["AvgGrade"]
+            j = i - 1
+            if rank == "A":
+                while j >= 0 and students[j]["AvgGrade"] > key_value:
+                    students[j + 1] = students[j]
+                    j -= 1
+            elif rank == "D":
+                while j >= 0 and students[j]["AvgGrade"] < key_value:
+                    students[j + 1] = students[j]
+                    j -= 1
+            else:
+                return "Invalid order."
+            students[j + 1] = key_item
         return "List sorted."
-    elif rank == "A":
-        return "List sorted."
+    except KeyError:
+        return "List not sorted. AvgGrade key not present."
 
 
 #==========================================#

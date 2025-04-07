@@ -15,76 +15,73 @@ __team__ = "T-051"
 # Place your curve_fit function after this line
 
 import numpy as np
+
+
 def curve_fit(data: list, compare: str, order: int) -> str:
     """
-    Returns a string representing the equation of best fit for the average grade in comparison to another value given a list of dicts containing the average grades, the string key to compare it to, and the order.
-    
+    Returns a string representing the equation of best fit for the average grade
+    in comparison to another value given a list of dictionaries containing the average grades,
+    the string key to compare it to, and the degree of the polynomial.
+
+    If order is negative, returns an error message.
+
     >>> curve_fit([{"AvgGrade": 10, "Age": 10}, {"AvgGrade":20, "Age": 20}], "Age", 1)
     y = x
-    >>> curve_fit([{"AvgGrade": 10, "Age": 10}, {"AvgGrade":20, "Age": 20}], "Age", 5)
-    y = x
-    >>> curve_fit([{"AvgGrade": 10, "Age": 10}, {"AvgGrade":20, "Age": 20}, {"AvgGrade": 15, "Age": 5}], "Age", 10)
-    y = -1.5*x^2+30.5*x^1+-190
-    
+    >>> curve_fit([{"AvgGrade": 10, "Age": 10}, {"AvgGrade":20, "Age": 20}], "Age", -1)
+    Error: Polynomial order must be >= 0.
     """
+    if order < 0:
+        return "Error: Polynomial order must be >= 0."
 
     x = []
-    y= []
+    y = []
     for person in data:
         try:
-            yval = person["AvgGrade"]
-            xval = person[compare]
-            yval = float(yval)
-            xval=float(xval)
-            y += [yval]
-            x += [xval]
-        except:
+            yval = float(person["AvgGrade"])
+            xval = float(person[compare])
+            y.append(yval)
+            x.append(xval)
+        except Exception:
             continue
 
+    # Average out duplicate x values
     rep = ""
     covered = []
     newx = []
     newy = []
-    for value in range(len(x)):
-        avgy=0
-        num = 0
-        if x[value] not in covered:
-            try:
-                covered += [x[value]]
-                for index in range(len(x)):
-                    if x[index] == x[value]:
-                        avgy += y[index]
-                        num += 1
-                newx += [x[value]]
-                newy += [avgy/num]
-            except:
-                continue
-
+    for idx in range(len(x)):
+        if x[idx] not in covered:
+            covered.append(x[idx])
+            avgy = 0
+            num = 0
+            for j in range(len(x)):
+                if x[j] == x[idx]:
+                    avgy += y[j]
+                    num += 1
+            newx.append(x[idx])
+            newy.append(avgy / num)
     x = newx
-    y= newy
+    y = newy
 
-    power = len(np.polyfit(x,y,len(x)-1).tolist())
-
-    if order>power:
-        for value in np.polyfit(x,y,len(x)-1).tolist():
-            if power != 0:
-                if value == 1:
-                    rep += "x^" + str(power) + "+"
-                else:
-                    rep += str(value) + "*x^" + str(power) + "+"
-            else:
-                rep += str(value)
-            power -= 1
+    # Use interpolation (degree = len(x)-1) if requested order is higher than possible
+    full_degree = len(x) - 1
+    if order > full_degree:
+        coeffs = np.polyfit(x, y, full_degree).tolist()
+        current_degree = full_degree
     else:
-        for value in np.polyfit(x,y,order).tolist():
-            if order != 0:
-                if value == 1:
-                    rep += "x^" + str(order) + "+"
-                else:
-                    rep += str(value) + "*x^" + str(order) + "+"
+        coeffs = np.polyfit(x, y, order).tolist()
+        current_degree = order
+
+    # Build string representation of the polynomial
+    for coef in coeffs:
+        if current_degree > 0:
+            if coef == 1:
+                rep += "x^" + str(current_degree) + "+"
             else:
-                rep += str(value)
-            order -= 1
+                rep += str(coef) + "*x^" + str(current_degree) + "+"
+        else:
+            rep += str(coef)
+        current_degree -= 1
 
     return "y = " + rep
 
