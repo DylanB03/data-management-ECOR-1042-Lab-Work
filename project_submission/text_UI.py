@@ -24,7 +24,6 @@ various previous lab submissions, including curve_fit, histogram, load_data and 
 As such, the program can be run, and all former programmed functionality can be used 
 simply from the terminal, inputting parameters when requested for order of curve fit, 
 file to be read, or any other parameter appropriate to the previous modules.
-
 """
 #==========================================#
 # Place your script for your text_UI after this line
@@ -34,14 +33,12 @@ import sort
 import curve_fit
 import histogram
 
-
 def display_menu():
     print("L)oad Data")
     print("S)ort Data")
     print("C)urve Fit")
     print("H)istogram")
     print("E)xit")
-
 
 def text_UI():
     data_loaded = False
@@ -54,7 +51,6 @@ def text_UI():
         if command.lower() == 'l':
             filename = input("Please enter the name of the file: ").strip()
             try:
-                # Try opening the file to check its existence
                 with open(filename, 'r') as f:
                     pass
             except FileNotFoundError:
@@ -67,10 +63,11 @@ def text_UI():
             else:
                 filter_value = input("Please enter the value of the attribute: ").strip()
                 request = {filter_attr: filter_value}
-            data = load_data.load_data(filename, request)
+            # Call add_average so each student dictionary gets an "AvgGrade" key
+            data = load_data.add_average(load_data.load_data(filename, request))
+            print("Data loaded.")
             if data is not None and data != []:
                 data_loaded = True
-                print("Data loaded")
             else:
                 print("Error loading data.")
 
@@ -86,14 +83,12 @@ def text_UI():
                 "avggrade": "AvgGrade",
                 "failures": "Failures"
             }
-            sort_attr_input = input(
-                "Please enter the attribute you want to use for sorting:\n'Age', 'Failures', 'AvgGrade', 'StudyTime': ").strip()
+            sort_attr_input = input("Please enter the attribute you want to use for sorting:\n'Age', 'Failures', 'AvgGrade', 'StudyTime': ").strip()
             attr_lower = sort_attr_input.lower()
             # Re-prompt until a valid attribute is entered
             while attr_lower not in valid_attributes:
                 print(f"Invalid input, the list cannot be sorted by {sort_attr_input}.")
-                sort_attr_input = input(
-                    "Please enter a valid attribute ('Age', 'Failures', 'AvgGrade', 'StudyTime'): ").strip()
+                sort_attr_input = input("Please enter a valid attribute ('Age', 'Failures', 'AvgGrade', 'StudyTime'): ").strip()
                 attr_lower = sort_attr_input.lower()
             sort_attr = valid_attributes[attr_lower]
 
@@ -112,8 +107,7 @@ def text_UI():
             if not data_loaded:
                 print("File not loaded. Please, load a file first.")
                 continue
-            fit_attr_input = input(
-                "Please enter the attribute you want to use to find the best fit for AvgGrade: ").strip()
+            fit_attr_input = input("Please enter the attribute you want to use to find the best fit for AvgGrade: ").strip()
             poly_order_str = input("Please enter the order of the polynomial to be fitted: ").strip()
             try:
                 poly_order = int(poly_order_str)
@@ -144,7 +138,6 @@ def text_UI():
                 print("No such command.")
             else:
                 print("Invalid command.")
-
 
 if __name__ == "__main__":
     text_UI()

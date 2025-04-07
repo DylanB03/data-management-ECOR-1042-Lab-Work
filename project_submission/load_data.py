@@ -266,46 +266,49 @@ def student_failures_list(filename: str, failures: int) -> list:
 #==========================================#
 # Place your load_data function after this line
 
-def load_data(fileName: str,request: dict) -> list:
+def load_data(fileName: str, request: dict) -> list:
     """
-    Returns a list of all students information that matches the given dict except for the key value from a given dict and a given file name. A key value of All returns all information.
+    Returns a list of all students information that matches the given dict except for the key value
+    from a given dict and a given file name. A key value of All returns all information.
 
     >>> load_data('student-mat.csv', {'Failures': 0})
-    [ {'School': 'GP', 'ID': 22, 'Age': 18, 'StudyTime':7.0, 'Health': 3, Absences': 7, 'FallGrade': 12, 'WinterGrade': 13},  {another element}, … ]
-    >>> load_data('student-mat.csv',{'ID':1})
+    [ {'School': 'GP', 'ID': 22, 'Age': 18, 'StudyTime': 7.0, 'Health': 3, 'Absences': 7, 'FallGrade': 12, 'WinterGrade': 13},  {another element}, … ]
+    >>> load_data('student-mat.csv', {'ID': 1})
     Invalid Value
     []
-    >>> load_data('student-mat.csv',{'HELLO':1000000000000})
+    >>> load_data('student-mat.csv', {'HELLO': 1000000000000})
     Invalid Value
     []
     """
-
     dataString = ""
-    file = open(fileName,"r")
+    file = open(fileName, "r")
     for line in file:
         dataString += line
     file.close()
-    
-    dataString = dataString.split()
+
+    # Split into separate lines using splitlines()
+    dataString = dataString.splitlines()
     information = []
-    headers = dataString[0].split(',')
-    #create a list of all information
+    # Strip whitespace from headers
+    headers = [h.strip() for h in dataString[0].split(',')]
+    # Remove header line
     del dataString[0]
     for student in dataString:
-        student=student.split(',')
+        # Split each record by comma and strip whitespace from each field
+        fields = [s.strip() for s in student.split(',')]
         currentDict = {}
-        for value in range(len(student)):
-            if student[value].isdigit():
-                currentDict[headers[value]] = int(student[value])
+        for i in range(len(fields)):
+            if fields[i].isdigit():
+                currentDict[headers[i]] = int(fields[i])
             else:
                 try:
-                    currentDict[headers[value]] = float(student[value])
+                    currentDict[headers[i]] = float(fields[i])
                 except:
-                    currentDict[headers[value]] = student[value]
-        information += [currentDict]
+                    currentDict[headers[i]] = fields[i]
+        information.append(currentDict)
 
     finalInfo = []
-    #if key is not all iterate through the information list and delete the key value given
+    # If key is not 'All', filter and remove the key from the dictionary
     key = ""
     value = ""
     for i in request.keys():
@@ -315,7 +318,7 @@ def load_data(fileName: str,request: dict) -> list:
         for student in information:
             try:
                 student[key]
-                if key == "FallGrade" or key == "WinterGrade" or key == "Absences" or key == "StudyTime" or key == "ID":
+                if key in ["FallGrade", "WinterGrade", "Absences", "StudyTime", "ID"]:
                     print("Invalid Value")
                     return []
             except:
@@ -323,7 +326,7 @@ def load_data(fileName: str,request: dict) -> list:
                 return []
             if student[key] == value:
                 del student[key]
-                finalInfo += [student]
+                finalInfo.append(student)
     else:
         return information
     return finalInfo
