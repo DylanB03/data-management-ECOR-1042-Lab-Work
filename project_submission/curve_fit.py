@@ -36,6 +36,7 @@ def curve_fit(data: list, compare: str, order: int) -> str:
 
     x = []
     y = []
+    #using try statement to filter any non float values
     for person in data:
         try:
             yval = float(person["AvgGrade"])
