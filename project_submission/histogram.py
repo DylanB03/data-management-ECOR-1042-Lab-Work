@@ -30,16 +30,17 @@ def histogram(students: list[dict], attribute: str) -> int:
     val_dict = {}
     x_vals = []
     y_vals = []
+    # Count how often each attribute value appears
     for student in students:
         stu_att = student[attribute]
         freq = val_dict.get(stu_att, 0)
         val_dict[stu_att] = freq + 1
-
+    # Obtain x and y values for string inputs (School)
     if isinstance(students[0][attribute], str):
         x_vals += val_dict.keys()
         y_vals += val_dict.values()
         max_val = -1
-
+    # Obtain maximum, x and y values for integer inputs
     elif isinstance(students[0][attribute], (float, int)):
         max_val = max(student[attribute] for student in students)
         temp_x = np.linspace(0, max_val, 11)
